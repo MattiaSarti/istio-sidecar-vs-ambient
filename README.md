@@ -1,11 +1,11 @@
 $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 
 <div style="display: flex; justify-content: space-evenly; align-items: center">
-    <img src="./istio-icon.svg" width="50" height="70">
+    <img src="./istio-icon.svg">
     <p align="center">
         <strong>A Comparison of Istio's Data Plane Models: Sidecar and Ambient</strong>
     </p>
-    <img width="50" height="70">
+    <img src="./istio-icon.svg">
 </div>
 
 
