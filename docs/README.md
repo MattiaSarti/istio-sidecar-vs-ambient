@@ -1,5 +1,4 @@
 $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
-
 <p align="center">
     <strong>A Comparison of Istio's Data Plane Models: Sidecar and Ambient</strong>
 </p>
@@ -17,7 +16,6 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
         <img src="./istio-icon.svg" style="vertical-align: middle;">
     </a>
 </div> -->
-
 
 
 ## Comparison Summary
