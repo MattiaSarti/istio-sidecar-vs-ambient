@@ -1,12 +1,18 @@
 $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 
-<div style="display: flex; justify-content: space-evenly; align-items: center">
-    <img src="./istio-icon.svg">
-    <p align="center">
-        <strong>A Comparison of Istio's Data Plane Models: Sidecar and Ambient</strong>
-    </p>
-    <img src="./istio-icon.svg">
-</div>
+<ul style="list-style-type: none; padding: 0; margin: 0; text-align: center;">
+    <li style="display: inline-block; margin: 0 10px;">
+        <img src="./istio-icon.svg" style="vertical-align: middle;">
+    </li>
+    <li style="display: inline-block; margin: 0 10px;">
+        <p align="center">
+            <strong>A Comparison of Istio's Data Plane Models: Sidecar and Ambient</strong>
+        </p>
+    </li>
+    <li style="display: inline-block; margin: 0 10px;">
+        <img src="./istio-icon.svg" style="vertical-align: middle;">
+    </li>
+</ul>
 
 
 ## Comparison Summary
