@@ -23,6 +23,13 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 ...bla bla bla...
 
 ```bash
+cd k8s-resources
+kubectl apply -f namespace.yaml
+dir_for_microservice_overlays="microservices/overlays"
+kubectl kustomize "${dir_for_microservice_overlays}/microservice-a" | kubectl apply -f -
+kubectl kustomize "${dir_for_microservice_overlays}/microservice-b" | kubectl apply -f -
+kubectl kustomize "${dir_for_microservice_overlays}/microservice-c" | kubectl apply -f -
+
 kubectl port-forward service/microservice-a 8081:8080
 
 curl http://localhost:8081/endpoint?message=mmm
