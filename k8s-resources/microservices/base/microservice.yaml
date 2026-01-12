@@ -8,6 +8,8 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 8080
+  selector:
+    microservice: whatever
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -17,6 +19,9 @@ metadata:
 spec:
   replicas: 2
   template:
+    metadata:
+      labels:
+        microservice: whatever
     spec:
       containers:
         - args:
