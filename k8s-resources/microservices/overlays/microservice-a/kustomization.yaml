@@ -8,7 +8,9 @@ resources:
 patches:
   - path: patch.yaml
 
-commonLabels:
-  microservice: a
+labels:
+- includeSelectors: true
+  pairs:
+    microservice: a
 
 nameSuffix: -a

@@ -65,7 +65,7 @@ spec:
           command: ["/bin/bash", "-c"]
           env:
             - name: APPLICATION_PORT
-              value: 8080
+              value: "8080"
             - name: CHARACTERS_TO_APPEND_TO_MESSAGE
               value: " | 🍄"
             - name: OTHER_MICROSERVICE_ENDPOINT_TO_CALL
