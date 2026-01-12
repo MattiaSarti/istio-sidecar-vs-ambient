@@ -52,7 +52,7 @@ spec:
                             self.send_error(400, "Bad Request", f"Missing '{REQUEST_QUERY_PARAMETER}' query parameter")
                         message = f"{message}{CHARACTERS_TO_APPEND_TO_MESSAGE}"
                         if OTHER_MICROSERVICE_ENDPOINT_TO_CALL:
-                          with urlopen(Request(f"{OTHER_MICROSERVICE_ENDPOINT_TO_CALL}?{REQUEST_QUERY_PARAMETER}={message}", method="GET", headers={"Accept": "application/json"})) as httpresponse:
+                          with urlopen(Request(f"{OTHER_MICROSERVICE_ENDPOINT_TO_CALL}?{REQUEST_QUERY_PARAMETER}={message.replace(" ", "%20")}", method="GET", headers={"Accept": "application/json"})) as httpresponse:
                             message = loads(httpresponse.read().decode(httpresponse.headers.get_content_charset("utf-8")))[RESPONSE_JSON_KEY]
                         self.send_response(200); self.send_header("Content-type", "application/json"); self.end_headers()
                         self.wfile.write(dumps({RESPONSE_JSON_KEY: message}, ensure_ascii=False).encode("utf-8"))                        
@@ -72,7 +72,7 @@ spec:
             - name: APPLICATION_PORT
               value: "8080"
             - name: CHARACTERS_TO_APPEND_TO_MESSAGE
-              value: " | 🍄"
+              value: " | by whatever microservice"
             - name: OTHER_MICROSERVICE_ENDPOINT_TO_CALL
               value: microservice.istio-experiments.svc.cluster.local:8080/endpoint
           image: python:3.12-slim

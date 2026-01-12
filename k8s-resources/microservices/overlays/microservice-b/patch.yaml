@@ -9,5 +9,7 @@ spec:
       containers:
         - name: application
           env:
+            - name: CHARACTERS_TO_APPEND_TO_MESSAGE
+              value: " | by B"
             - name: OTHER_MICROSERVICE_ENDPOINT_TO_CALL
-              value: microservice-c.istio-experiments.svc.cluster.local:8080/endpoint
+              value: http://microservice-c.istio-experiments.svc.cluster.local:8080/endpoint
