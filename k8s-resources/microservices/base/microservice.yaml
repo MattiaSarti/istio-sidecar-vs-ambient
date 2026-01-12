@@ -22,15 +22,19 @@ spec:
         - args:
             - |
               cat << EOF > webserver.py
-              from json import dumps
+              from json import dumps, loads
               from os import environ
               from http.server import BaseHTTPRequestHandler, HTTPServer
               from urllib.parse import urlsplit, parse_qs
+              from urllib.request import Request, urlopen
 
+              APPLICATION_PORT = int(environ["APPLICATION_PORT"])
               CHARACTERS_TO_APPEND_TO_MESSAGE = environ["CHARACTERS_TO_APPEND_TO_MESSAGE"]
+              OTHER_MICROSERVICE_ENDPOINT_TO_CALL = environ["OTHER_MICROSERVICE_ENDPOINT_TO_CALL"]
+
               ENDPOINT_PATH = "/endpoint"
               REQUEST_QUERY_PARAMETER = "message"
-              RESPONSE_JSON_KEY = "processed-message"
+              RESPONSE_JSON_KEY = "message"
 
 
               class HTTPRequestHandler(BaseHTTPRequestHandler):
@@ -41,11 +45,12 @@ spec:
                         message = query_parameters.get(REQUEST_QUERY_PARAMETER, [None])[0]
                         if message is None:
                             self.send_error(400, "Bad Request", f"Missing '{REQUEST_QUERY_PARAMETER}' query parameter")
-                        processed_message = f"{message}{CHARACTERS_TO_APPEND_TO_MESSAGE}"
-                        self.send_response(200)
-                        self.send_header("Content-type", "application/json")
-                        self.end_headers()
-                        self.wfile.write(dumps({RESPONSE_JSON_KEY: processed_message}, ensure_ascii=False).encode("utf-8"))                        
+                        message = f"{message}{CHARACTERS_TO_APPEND_TO_MESSAGE}"
+                        if OTHER_MICROSERVICE_ENDPOINT_TO_CALL:
+                          with urlopen(Request(f"{OTHER_MICROSERVICE_ENDPOINT_TO_CALL}?{REQUEST_QUERY_PARAMETER}={message}", method="GET", headers={"Accept": "application/json"})) as httpresponse:
+                            message = loads(httpresponse.read().decode(httpresponse.headers.get_content_charset("utf-8")))[RESPONSE_JSON_KEY]
+                        self.send_response(200); self.send_header("Content-type", "application/json"); self.end_headers()
+                        self.wfile.write(dumps({RESPONSE_JSON_KEY: message}, ensure_ascii=False).encode("utf-8"))                        
                     except Exception as exception:
                         self.send_error(500, "Internal Server Error", str(exception))
                   else:
@@ -53,14 +58,18 @@ spec:
 
 
               if __name__ == "__main__":
-                HTTPServer(('', 8080), HTTPRequestHandler).serve_forever()
+                HTTPServer(('', APPLICATION_PORT), HTTPRequestHandler).serve_forever()
               EOF
 
               python3 webserver.py
           command: ["/bin/bash", "-c"]
           env:
+            - name: APPLICATION_PORT
+              value: 8080
             - name: CHARACTERS_TO_APPEND_TO_MESSAGE
               value: " | 🍄"
+            - name: OTHER_MICROSERVICE_ENDPOINT_TO_CALL
+              value: microservice.istio-experiments.svc.cluster.local:8080/endpoint
           image: python:3.12-slim
           name: application
           ports:

@@ -23,7 +23,9 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 ...bla bla bla...
 
 ```bash
-kubectl port-forward service/microservice-a :8080
+kubectl port-forward service/microservice-a 8081:8080
+
+curl http://localhost:8081/endpoint?message=mmm
 ```
 
 
