@@ -30,7 +30,7 @@ kubectl kustomize "${dir_for_microservice_overlays}/microservice-a" | kubectl ap
 kubectl kustomize "${dir_for_microservice_overlays}/microservice-b" | kubectl apply -f -
 kubectl kustomize "${dir_for_microservice_overlays}/microservice-c" | kubectl apply -f -
 
-kubectl port-forward service/microservice-a 8081:8080
+kubectl port-forward -n istio-experiments service/microservice-a 8081:80
 curl http://localhost:8081/endpoint?message=mmm
 
 kubectl delete namespace istio-experiments
