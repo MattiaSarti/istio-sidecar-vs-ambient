@@ -22,6 +22,10 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 
 ...bla bla bla...
 
+```bash
+kubectl port-forward service/microservice-a :8080
+```
+
 
 ## Instructions to Run the Toy Project
 

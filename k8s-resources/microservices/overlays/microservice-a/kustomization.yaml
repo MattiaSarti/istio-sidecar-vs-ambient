@@ -6,6 +6,6 @@ bases:
 - ../../base
 
 commonLabels:
-  microservice: 2
+  microservice: a
 
-nameSuffix: -2
+nameSuffix: -a
