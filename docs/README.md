@@ -35,10 +35,10 @@ kubectl kustomize "${dir_for_microservice_overlays}/microservice-a" | kubectl ap
 kubectl kustomize "${dir_for_microservice_overlays}/microservice-b" | kubectl apply -f -
 kubectl kustomize "${dir_for_microservice_overlays}/microservice-c" | kubectl apply -f -
 
-kubectl port-forward -n istio-experiments service/microservice-a 8081:80
+kubectl port-forward -n istio-experiments-with-no-mesh service/microservice-a 8081:80
 curl -w '\n' http://localhost:8081/endpoint?message=welcome
 
-kubectl delete namespace istio-experiments
+kubectl delete namespace istio-experiments-with-no-mesh
 ```
 
 ### ...in Sidecar Mode:

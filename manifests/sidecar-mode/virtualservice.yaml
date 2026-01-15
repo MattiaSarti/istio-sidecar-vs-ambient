@@ -2,7 +2,7 @@ apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
   name: reviews
-  namespace: istio-experiments
+  namespace: istio-experiments-with-no-mesh
 spec:
   hosts:
     - completely-made-up-url
