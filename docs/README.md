@@ -72,7 +72,7 @@ kubectl delete namespace istio-experiments
 - [Ambient Architecture](https://istio.io/latest/docs/ambient/architecture/)
 
 
-## ToDos:
+## ToDos
 - traffic (routing rules + gateway)
 - security (mTLS)
 - some observability (traffic metrics)
