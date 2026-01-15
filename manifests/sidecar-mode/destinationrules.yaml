@@ -1,0 +1,32 @@
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: microservice-a
+  namespace: istio-experiments-with-sidecar-mode
+spec:
+  host: microservice-a
+  trafficPolicy:
+    loadBalancer:
+      simple: LEAST_REQUEST
+---
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: microservice-b
+  namespace: istio-experiments-with-sidecar-mode
+spec:
+  host: microservice-b
+  trafficPolicy:
+    loadBalancer:
+      simple: LEAST_REQUEST
+---
+apiVersion: networking.istio.io/v1
+kind: DestinationRule
+metadata:
+  name: microservice-c
+  namespace: istio-experiments-with-sidecar-mode
+spec:
+  host: microservice-c
+  trafficPolicy:
+    loadBalancer:
+      simple: LEAST_REQUEST

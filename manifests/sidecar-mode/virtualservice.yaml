@@ -1,8 +1,8 @@
 apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
-  name: reviews
-  namespace: istio-experiments-with-no-mesh
+  name: microservices
+  namespace: istio-experiments-with-sidecar-mode
 spec:
   hosts:
     - completely-made-up-url
