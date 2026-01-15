@@ -22,8 +22,13 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 
 ...bla bla bla...
 
+
+## Instructions to Run the Toy Project
+
+### ...Without Istio:
 ```bash
-cd k8s-resources
+cd manifests/no-mesh
+
 kubectl apply -f namespace.yaml
 dir_for_microservice_overlays="microservices/overlays"
 kubectl kustomize "${dir_for_microservice_overlays}/microservice-a" | kubectl apply -f -
@@ -34,14 +39,6 @@ kubectl port-forward -n istio-experiments service/microservice-a 8081:80
 curl -w '\n' http://localhost:8081/endpoint?message=welcome
 
 kubectl delete namespace istio-experiments
-```
-
-
-## Instructions to Run the Toy Project
-
-### ...Without Istio:
-```bash
-...bla bla bla...
 ```
 
 ### ...in Sidecar Mode:

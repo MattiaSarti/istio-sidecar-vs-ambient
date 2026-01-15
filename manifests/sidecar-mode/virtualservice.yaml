@@ -1,0 +1,29 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: reviews
+  namespace: istio-experiments
+spec:
+  hosts:
+    - completely-made-up-url
+  http:
+    - match:
+        - uri:
+            prefix: /a
+      rewrite:
+        uri: /endpoint
+      route:
+        - destination:
+            host: microservice-a  # NOTE: same namespace assumed for short names
+    - match:
+        - uri:
+            prefix: /b
+      route:
+        - destination:
+            host: microservice-b  # NOTE: same namespace assumed for short names
+    - match:
+        - uri:
+            prefix: /c
+      route:
+        - destination:
+            host: microservice-b  # NOTE: same namespace assumed for short names
