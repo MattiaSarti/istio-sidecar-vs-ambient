@@ -25,31 +25,43 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 
 ## Instructions to Run the Toy Project
 
-### ...Without Istio:
-```bash
-cd manifests/no-mesh
 
-kubectl apply -f namespace.yaml
-dir_for_microservice_overlays="microservices/overlays"
-kubectl kustomize "${dir_for_microservice_overlays}/microservice-a" | kubectl apply -f -
-kubectl kustomize "${dir_for_microservice_overlays}/microservice-b" | kubectl apply -f -
-kubectl kustomize "${dir_for_microservice_overlays}/microservice-c" | kubectl apply -f -
+### First...
+- #### ...Without Istio:
+    ```bash
+    MANIFEST_SUBFOLDER="no-mesh"
+    ```
+- #### ...in Sidecar Mode:
+    ```bash
+    MANIFEST_SUBFOLDER="sidecar-mode"
+    ```
+- #### ...in Ambient Mode:
+    ```bash
+    MANIFEST_SUBFOLDER="ambient-mode"
+    ```
 
-kubectl port-forward -n istio-experiments-with-no-mesh service/microservice-a 8081:80
-curl -w '\n' http://localhost:8081/endpoint?message=welcome
+### Then:
+1. #### Deploy:
+    ```bash
+    manifest_folder="manifests/${MANIFEST_SUBFOLDER}"
+    subfolder_for_microservice_overlays="${manifest_folder}/microservices/overlays"
 
-kubectl delete namespace istio-experiments-with-no-mesh
-```
+    kubectl apply -f "${manifest_folder}"
+    kubectl kustomize "${subfolder_for_microservice_overlays}/microservice-a" | kubectl apply -f -
+    kubectl kustomize "${subfolder_for_microservice_overlays}/microservice-b" | kubectl apply -f -
+    kubectl kustomize "${subfolder_for_microservice_overlays}/microservice-c" | kubectl apply -f -
+    ```
+1. #### Experiment:
+    ```bash
+    namespace_name=$(grep -o 'name: .*' "${manifest_folder}/namespace.yaml" | cut -d ' ' -f 2)
 
-### ...in Sidecar Mode:
-```bash
-...bla bla bla...
-```
-
-### ...in Ambient Mode:
-```bash
-...bla bla bla...
-```
+    kubectl port-forward -n ${namespace_name} service/microservice-a 8081:80
+    curl -w '\n' http://localhost:8081/endpoint?message=welcome
+    ```
+1. #### Tear Down:
+    ```
+    kubectl delete -f "${manifest_folder}/namespace.yaml"
+    ```
 
 
 ## Useful Information
