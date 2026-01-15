@@ -53,3 +53,20 @@ kubectl delete namespace istio-experiments
 ```bash
 ...bla bla bla...
 ```
+
+
+## Useful Information
+
+### Docs
+#### Introductory:
+- [What is Istio?](https://istio.io/latest/docs/overview/what-is-istio/)
+- [Why choose Istio?](https://istio.io/latest/docs/overview/why-choose-istio/)
+- [Sidecar or ambient?](https://istio.io/latest/docs/overview/dataplane-modes/)
+#### Both for Sidecar and Ambient Modes:
+- [Traffic Management](https://istio.io/latest/docs/concepts/traffic-management/)
+- [Observability](https://istio.io/latest/docs/concepts/observability/)
+- [Security](https://istio.io/latest/docs/concepts/security/)
+- [Install the Istio CNI node agent](https://istio.io/latest/docs/setup/additional-setup/cni/)
+#### For Ambient Mode:
+- [Ambient Overview](https://istio.io/latest/docs/ambient/overview/)
+- [Ambient Architecture](https://istio.io/latest/docs/ambient/architecture/)
