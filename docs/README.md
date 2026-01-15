@@ -70,3 +70,10 @@ kubectl delete namespace istio-experiments
 #### For Ambient Mode:
 - [Ambient Overview](https://istio.io/latest/docs/ambient/overview/)
 - [Ambient Architecture](https://istio.io/latest/docs/ambient/architecture/)
+
+
+## ToDos:
+- traffic (routing rules + gateway)
+- security (mTLS)
+- some observability (traffic metrics)
+- distributed tracing (request tracking across microservices)
