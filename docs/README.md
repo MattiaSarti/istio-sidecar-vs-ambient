@@ -67,9 +67,11 @@ kubectl delete namespace istio-experiments
 - [Observability](https://istio.io/latest/docs/concepts/observability/)
 - [Security](https://istio.io/latest/docs/concepts/security/)
 - [Install the Istio CNI node agent](https://istio.io/latest/docs/setup/additional-setup/cni/)
+#### For Sidecar Mode:
+- [Architecture](https://istio.io/latest/docs/ops/deployment/architecture/)
 #### For Ambient Mode:
-- [Ambient Overview](https://istio.io/latest/docs/ambient/overview/)
-- [Ambient Architecture](https://istio.io/latest/docs/ambient/architecture/)
+- [Overview](https://istio.io/latest/docs/ambient/overview/)
+- [Architecture](https://istio.io/latest/docs/ambient/architecture/)
 
 
 ## ToDos
@@ -77,3 +79,4 @@ kubectl delete namespace istio-experiments
 - security (mTLS)
 - some observability (traffic metrics)
 - distributed tracing (request tracking across microservices)
+- retries
