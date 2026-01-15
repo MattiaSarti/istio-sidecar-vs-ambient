@@ -73,6 +73,7 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 - [Sidecar or ambient?](https://istio.io/latest/docs/overview/dataplane-modes/)
 #### Both for Sidecar and Ambient Modes:
 - [Traffic Management](https://istio.io/latest/docs/concepts/traffic-management/)
+- [Authorization Policy](https://istio.io/latest/docs/reference/config/security/authorization-policy/)
 - [Observability](https://istio.io/latest/docs/concepts/observability/)
 - [Security](https://istio.io/latest/docs/concepts/security/)
 - [Install the Istio CNI node agent](https://istio.io/latest/docs/setup/additional-setup/cni/)
@@ -85,6 +86,8 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 
 ## ToDos
 - traffic (routing rules + gateway)
+    - do not allow all microservices to talk one to another
+    - ingress & egress
 - security (mTLS)
 - some observability (traffic metrics)
 - distributed tracing (request tracking across microservices)
