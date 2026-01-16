@@ -1,16 +1,43 @@
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
-  name: httpbin
-  namespace: foo
+  name: microservices-from-a-to-b
+  namespace: istio-experiments-with-sidecar-mode
 spec:
-  action: DENY
+  action: ALLOW
   rules:
   - from:
     - source:
-        namespaces: ["dev"]
+        namespaces: ["istio-experiments-with-sidecar-mode"]
+        principals: ["cluster.local/ns/istio-experiments-with-sidecar-mode/sa/<SERVICE_ACCOUNT>"]  # TODO: replace "<SERVICE_ACCOUNT>" with A's one once mTLS is implemented as described here: https://istio.io/latest/docs/reference/config/security/authorization-policy/#Source-principals
     to:
     - operation:
-        methods: ["POST"]
+        methods: ["GET"]
+        namespaces: ["istio-experiments-with-sidecar-mode"]
+        paths: ["/endpoint"]
+        ports: ["80"]
+  selector:
+    matchLabels:
+      microservice: b
 ---
-
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: microservices-from-b-to-c
+  namespace: istio-experiments-with-sidecar-mode
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        namespaces: ["istio-experiments-with-sidecar-mode"]
+        principals: ["cluster.local/ns/istio-experiments-with-sidecar-mode/sa/<SERVICE_ACCOUNT>"]  # TODO: replace "<SERVICE_ACCOUNT>" with B's one once mTLS is implemented as described here: https://istio.io/latest/docs/reference/config/security/authorization-policy/#Source-principals
+    to:
+    - operation:
+        methods: ["GET"]
+        namespaces: ["istio-experiments-with-sidecar-mode"]
+        paths: ["/endpoint"]
+        ports: ["80"]
+  selector:
+    matchLabels:
+      microservice: c
