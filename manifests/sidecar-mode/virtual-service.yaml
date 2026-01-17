@@ -10,6 +10,9 @@ spec:
     - match:
         - uri:
             prefix: /a
+      retries:
+        attempts: 3
+        perTryTimeout: 5s
       rewrite:
         uri: /endpoint
       route:
@@ -19,8 +22,14 @@ spec:
     - match:
         - uri:
             prefix: /b
+      retries:
+        attempts: 3
+        perTryTimeout: 5s
       rewrite:
         uri: /endpoint
+      retries:
+        attempts: 3
+        perTryTimeout: 5s
       route:
         - destination:
             host: microservice-b
@@ -28,11 +37,14 @@ spec:
     - match:
         - uri:
             prefix: /c
+      retries:
+        attempts: 3
+        perTryTimeout: 5s
       rewrite:
         uri: /endpoint
       route:
         - destination:
-            host: microservice-b
+            host: microservice-c
       timeout: 3s
   gateways:
     - microservices-ingress
