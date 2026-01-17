@@ -17,6 +17,13 @@ metadata:
 spec:
   host: microservice-b
   trafficPolicy:
+    connectionPool:
+      http:
+        http1MaxPendingRequests: 20
+        maxRequestsPerConnection: 30
+      tcp:
+        maxConnections: 6
+        maxConnectionDuration: 10s
     loadBalancer:
       simple: LEAST_REQUEST
 ---
