@@ -14,16 +14,25 @@ spec:
         uri: /endpoint
       route:
         - destination:
-            host: microservice-a  # NOTE: same namespace assumed for short names
+            host: microservice-a
+      timeout: 3s
     - match:
         - uri:
             prefix: /b
+      rewrite:
+        uri: /endpoint
       route:
         - destination:
-            host: microservice-b  # NOTE: same namespace assumed for short names
+            host: microservice-b
+      timeout: 3s
     - match:
         - uri:
             prefix: /c
+      rewrite:
+        uri: /endpoint
       route:
         - destination:
-            host: microservice-b  # NOTE: same namespace assumed for short names
+            host: microservice-b
+      timeout: 3s
+  gateways:
+    - microservices-ingress

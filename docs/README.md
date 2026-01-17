@@ -85,10 +85,14 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 
 
 ## ToDos
+- install Istio
+    - for disabling all egress traffic, set the `outboundTrafficPolicy.mode` to `REGISTRY_ONLY` when installing Istio with the required settings via `istioctl`
+- K8s Gateway with no mesh
 - traffic (routing rules + gateway)
-    - do not allow all microservices to talk one to another
-    - ingress & egress
 - security (mTLS)
 - some observability (traffic metrics)
 - distributed tracing (request tracking across microservices)
 - retries
+- test
+    - number of sidecars (1 per replica)
+    - access control (both internal and external)

@@ -1,0 +1,13 @@
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: microservices-ingress
+  namespace: istio-experiments-with-sidecar-mode
+spec:
+  servers:
+    - hosts:
+        - "*"
+      port:
+        name: all-http-on-80
+        number: 80
+        protocol: HTTP
