@@ -41,26 +41,49 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     ```
 
 ### Then:
+1. #### Set Up:
+    ```bash
+    alias kubectl='microk8s kubectl'
+
+    curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.28.2 TARGET_ARCH=x86_64 sh -
+    mv ./istio-1.28.2/bin/istioctl .
+    rm -r ./istio-1.28.2
+
+    sudo snap install microk8s --classic --channel=1.32
+    sudo usermod -a -G microk8s $USER
+    sudo chown -R $USER ~/.kube
+    newgrp microk8s
+    microk8s status --wait-ready
+    microk8s enable community
+    microk8s enable dns
+    sudo microk8s enable hostpath-storage
+    microk8s enable istio
+    ```
 1. #### Deploy:
     ```bash
-    manifest_folder="manifests/${MANIFEST_SUBFOLDER}"
+    manifest_folder="./manifests"
+    manifest_subfolder="${manifest_folder}/${MANIFEST_SUBFOLDER}"
     subfolder_for_microservice_overlays="${manifest_folder}/microservices/overlays"
 
-    kubectl apply -f "${manifest_folder}"
+    ./istioctl install -f "${manifest_folder}/istio-configurations.yaml"
+
+    kubectl apply -f "${manifest_subfolder}"
     kubectl kustomize "${subfolder_for_microservice_overlays}/microservice-a" | kubectl apply -f -
     kubectl kustomize "${subfolder_for_microservice_overlays}/microservice-b" | kubectl apply -f -
     kubectl kustomize "${subfolder_for_microservice_overlays}/microservice-c" | kubectl apply -f -
     ```
 1. #### Experiment:
     ```bash
-    namespace_name=$(grep -o 'name: .*' "${manifest_folder}/namespace.yaml" | cut -d ' ' -f 2)
+    namespace_name=$(grep -o 'name: .*' "${manifest_subfolder}/namespace.yaml" | cut -d ' ' -f 2)
 
     kubectl port-forward -n ${namespace_name} service/microservice-a 8081:80
     curl -w '\n' http://localhost:8081/endpoint?message=welcome
     ```
 1. #### Tear Down:
     ```
-    kubectl delete -f "${manifest_folder}/namespace.yaml"
+    kubectl delete -f "${manifest_subfolder}/namespace.yaml"
+    ./istioctl uninstall --purge
+    kubectl delete namespace istio-system
     ```
 
 
