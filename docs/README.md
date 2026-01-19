@@ -109,8 +109,6 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 
 ## ToDos
 - K8s Gateway with no mesh
-- install Istio
-    - for disabling all egress traffic, set the `outboundTrafficPolicy.mode` to `REGISTRY_ONLY` when installing Istio with the required settings via `istioctl`
 - test
     - number of sidecars (1 per replica)
     - access control
