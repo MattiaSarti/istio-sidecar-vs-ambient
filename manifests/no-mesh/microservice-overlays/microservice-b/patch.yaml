@@ -2,7 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: microservice
-  namespace: istio-experiments-application-with-no-mesh
 spec:
   template:
     spec:
