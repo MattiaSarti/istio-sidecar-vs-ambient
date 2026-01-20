@@ -5,7 +5,7 @@ kind: Kustomization
 resources:
   - ../../../microservice-base
 
-namespace: istio-experiments-application-with-no-mesh
+namespace: istio-experiments-application-with-sidecar-mode
 
 patches:
   - path: patch.yaml
