@@ -1,0 +1,18 @@
+# overlays/staging/kustomization.yaml
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../../microservice-base
+
+namespace: istio-experiments-application-with-no-mesh
+
+patches:
+  - path: patch.yaml
+
+labels:
+  - includeSelectors: true
+    pairs:
+      microservice: c
+
+nameSuffix: -c
