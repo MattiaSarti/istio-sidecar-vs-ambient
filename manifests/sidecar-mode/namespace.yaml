@@ -2,3 +2,4 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: istio-experiments-application-with-sidecar-mode
+  istio-injection: enabled
