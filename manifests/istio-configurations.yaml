@@ -13,5 +13,8 @@ spec:
     cni:
       cniConfDir: /var/snap/microk8s/current/args/cni-network
       cniBinDir: /var/snap/microk8s/current/opt/cni/bin
+      excludeNamespaces:
+        - istio-experiments-istio-system
     global:
+      istioNamespace: istio-experiments-istio-system
       platform: microk8s
