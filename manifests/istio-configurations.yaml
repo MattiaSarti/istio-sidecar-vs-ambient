@@ -2,14 +2,13 @@ apiVersion: install.istio.io/v1alpha1
 kind: IstioOperator
 metadata:
   name: istio-installation
-  namespace: istio-system
+  namespace: istio-experiments-istio-system
 spec:
   meshConfig:
     outboundTrafficPolicy:
       mode: REGISTRY_ONLY  # disabling all egress traffic unless explicitly registered
   profile: default
-  revision: ...TODO...
-  tag: ...TODO...
+  tag: 1.28.2
   values:
     cni:
       cniConfDir: /var/snap/microk8s/current/args/cni-network

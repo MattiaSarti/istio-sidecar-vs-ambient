@@ -11,4 +11,4 @@ spec:
     - "istio-experiments-with-sidecar-mode/*"
     # NOTE: from Istio's docs, "[...] Istio control plane (needed by Istio’s egress and telemetry features)":
     # https://istio.io/latest/docs/concepts/traffic-management/#sidecars
-    - "istio-system/*"
+    - "istio-experiments-istio-system/*"
