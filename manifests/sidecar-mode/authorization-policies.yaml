@@ -13,7 +13,6 @@ spec:
     to:
     - operation:
         methods: ["GET"]
-        namespaces: ["istio-experiments-application-with-sidecar-mode"]
         paths: ["/endpoint"]
         ports: ["80"]
   selector:
@@ -35,7 +34,6 @@ spec:
     to:
     - operation:
         methods: ["GET"]
-        namespaces: ["istio-experiments-application-with-sidecar-mode"]
         paths: ["/endpoint"]
         ports: ["80"]
   selector:
