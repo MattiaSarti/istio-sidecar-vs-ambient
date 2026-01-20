@@ -65,12 +65,13 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     manifest_subfolder="${manifest_folder}/${MANIFEST_SUBFOLDER}"
     subfolder_for_microservice_overlays="${manifest_folder}/microservices/overlays"
 
-    ./istioctl install -f "${manifest_folder}/istio-configurations.yaml"
+    ./istioctl install -y -f "${manifest_folder}/istio-configurations.yaml"
 
     kubectl apply -f "${manifest_subfolder}"
-    kubectl kustomize "${subfolder_for_microservice_overlays}/microservice-a" | kubectl apply -f -
-    kubectl kustomize "${subfolder_for_microservice_overlays}/microservice-b" | kubectl apply -f -
-    kubectl kustomize "${subfolder_for_microservice_overlays}/microservice-c" | kubectl apply -f -
+    for microservice_overlay_suffix in a b c
+    do
+        kubectl kustomize "${subfolder_for_microservice_overlays}/microservice-${microservice_overlay_suffix}" | kubectl apply -f -
+    done
     ```
 1. #### Experiment:
     ```bash
