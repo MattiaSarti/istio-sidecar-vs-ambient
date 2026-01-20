@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: microservice
-  namespace: istio-experiments-with-no-mesh
+  namespace: istio-experiments-application-with-no-mesh
 spec:
   template:
     spec:
@@ -12,4 +12,4 @@ spec:
             - name: CHARACTERS_TO_APPEND_TO_MESSAGE
               value: " | by B"
             - name: OTHER_MICROSERVICE_ENDPOINT_TO_CALL
-              value: http://microservice-c.istio-experiments-with-no-mesh.svc.cluster.local/endpoint
+              value: http://microservice-c.istio-experiments-application-with-no-mesh.svc.cluster.local/endpoint

@@ -1,4 +1,4 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: istio-experiments-with-ambient-mode
+  name: istio-experiments-application-with-ambient-mode

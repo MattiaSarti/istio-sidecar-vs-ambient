@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: microservice
-  namespace: istio-experiments-with-no-mesh
+  namespace: istio-experiments-application-with-no-mesh
 spec:
   ports:
   - protocol: TCP
@@ -15,7 +15,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: microservice
-  namespace: istio-experiments-with-no-mesh
+  namespace: istio-experiments-application-with-no-mesh
 spec:
   replicas: 2
   template:
@@ -74,7 +74,7 @@ spec:
             - name: CHARACTERS_TO_APPEND_TO_MESSAGE
               value: " | by whatever microservice"
             - name: OTHER_MICROSERVICE_ENDPOINT_TO_CALL
-              value: microservice.istio-experiments-with-no-mesh.svc.cluster.local/endpoint
+              value: microservice.istio-experiments-application-with-no-mesh.svc.cluster.local/endpoint
           image: python:3.12-slim
           name: application
           ports:

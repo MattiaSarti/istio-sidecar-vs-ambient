@@ -2,7 +2,7 @@ apiVersion: networking.istio.io/v1
 kind: Gateway
 metadata:
   name: microservices-ingress
-  namespace: istio-experiments-with-sidecar-mode
+  namespace: istio-experiments-application-with-sidecar-mode
 spec:
   servers:
     - hosts:

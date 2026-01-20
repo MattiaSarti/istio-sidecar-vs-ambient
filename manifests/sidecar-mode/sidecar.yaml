@@ -4,11 +4,11 @@ metadata:
   # NOTE: from Istio's docs, "It is recommended to use the name default for the namespace-wide sidecar":
   # https://istio.io/latest/docs/reference/config/networking/sidecar/
   name: default
-  namespace: istio-experiments-with-sidecar-mode
+  namespace: istio-experiments-application-with-sidecar-mode
 spec:
   egress:
   - hosts:
-    - "istio-experiments-with-sidecar-mode/*"
+    - "istio-experiments-application-with-sidecar-mode/*"
     # NOTE: from Istio's docs, "[...] Istio control plane (needed by Istio’s egress and telemetry features)":
     # https://istio.io/latest/docs/concepts/traffic-management/#sidecars
     - "istio-experiments-istio-system/*"

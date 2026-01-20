@@ -2,7 +2,7 @@ apiVersion: networking.istio.io/v1
 kind: VirtualService
 metadata:
   name: microservices
-  namespace: istio-experiments-with-sidecar-mode
+  namespace: istio-experiments-application-with-sidecar-mode
 spec:
   hosts:
     - completely-made-up-url

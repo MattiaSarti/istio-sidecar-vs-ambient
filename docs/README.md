@@ -63,7 +63,7 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     ```bash
     manifest_folder="./manifests"
     manifest_subfolder="${manifest_folder}/${MANIFEST_SUBFOLDER}"
-    subfolder_for_microservice_overlays="${manifest_folder}/microservices/overlays"
+    subfolder_for_microservice_overlays="${manifest_subfolder}/microservices/overlays"
 
     ./istioctl install -y -f "${manifest_folder}/istio-configurations.yaml"
 
