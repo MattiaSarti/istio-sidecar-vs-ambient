@@ -6,10 +6,7 @@ metadata:
 spec:
   action: ALLOW
   rules:
-  - from:
-      - source:
-          requestPrincipals: ["*"]
-    to:
+  - to:
       - operation:
           methods: ["GET"]
           paths: ["/endpoint"]
