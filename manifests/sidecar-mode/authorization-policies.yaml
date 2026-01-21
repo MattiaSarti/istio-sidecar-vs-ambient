@@ -13,7 +13,7 @@ spec:
       - operation:
           methods: ["GET"]
           paths: ["/endpoint"]
-          ports: ["80"]
+          ports: ["8080"]
     when:
       - key: "request.headers[User-Agent]"
         values:
@@ -39,7 +39,7 @@ spec:
       - operation:
           methods: ["GET"]
           paths: ["/endpoint"]
-          ports: ["80"]
+          ports: ["8080"]
   selector:
     matchLabels:
       microservice: b
@@ -60,7 +60,7 @@ spec:
       - operation:
           methods: ["GET"]
           paths: ["/endpoint"]
-          ports: ["80"]
+          ports: ["8080"]
   selector:
     matchLabels:
       microservice: c
