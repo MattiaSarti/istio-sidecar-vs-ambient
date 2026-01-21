@@ -7,7 +7,7 @@ spec:
   meshConfig:
     outboundTrafficPolicy:
       mode: REGISTRY_ONLY  # disabling all egress traffic unless explicitly registered
-  profile: default
+  profile: minimal
   tag: 1.28.2
   values:
     cni:

@@ -5,7 +5,7 @@ metadata:
   namespace: istio-experiments-application-with-sidecar-mode
 spec:
   hosts:
-    - completely-made-up-url
+    - completely.made.up.host.com
   http:
     - match:
         - uri:
