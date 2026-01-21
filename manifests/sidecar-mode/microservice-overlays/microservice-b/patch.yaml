@@ -11,4 +11,4 @@ spec:
             - name: CHARACTERS_TO_APPEND_TO_MESSAGE
               value: " | by B"
             - name: OTHER_MICROSERVICE_ENDPOINT_TO_CALL
-              value: http://completely-made-up-url/c
+              value: http://microservice-c/c
