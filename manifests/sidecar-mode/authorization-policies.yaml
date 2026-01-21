@@ -7,20 +7,21 @@ spec:
   action: ALLOW
   rules:
   - from:
-    - source: []
+      - source:
+          requestPrincipals: ["*"]
     to:
-    - operation:
-        methods: ["GET"]
-        paths: ["/endpoint"]
-        ports: ["80"]
+      - operation:
+          methods: ["GET"]
+          paths: ["/endpoint"]
+          ports: ["80"]
+    when:
+      - key: "request.headers[User-Agent]"
+        values:
+          - "a-very-handsome-client"
+          - "another-very-handsome-client"
   selector:
     matchLabels:
       microservice: a
-  when:
-    - key: "request.headers[User-Agent]"
-      values:
-        - "a-very-handsome-client"
-        - "another-very-handsome-client"
 ---
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
@@ -31,14 +32,14 @@ spec:
   action: ALLOW
   rules:
   - from:
-    - source:
-        namespaces: ["istio-experiments-application-with-sidecar-mode"]
-        principals: ["cluster.local/ns/istio-experiments-application-with-sidecar-mode/sa/microservice-a"]
+      - source:
+          namespaces: ["istio-experiments-application-with-sidecar-mode"]
+          principals: ["cluster.local/ns/istio-experiments-application-with-sidecar-mode/sa/microservice-a"]
     to:
-    - operation:
-        methods: ["GET"]
-        paths: ["/endpoint"]
-        ports: ["80"]
+      - operation:
+          methods: ["GET"]
+          paths: ["/endpoint"]
+          ports: ["80"]
   selector:
     matchLabels:
       microservice: b
@@ -52,14 +53,14 @@ spec:
   action: ALLOW
   rules:
   - from:
-    - source:
-        namespaces: ["istio-experiments-application-with-sidecar-mode"]
-        principals: ["cluster.local/ns/istio-experiments-application-with-sidecar-mode/sa/microservice-b"]
+      - source:
+          namespaces: ["istio-experiments-application-with-sidecar-mode"]
+          principals: ["cluster.local/ns/istio-experiments-application-with-sidecar-mode/sa/microservice-b"]
     to:
-    - operation:
-        methods: ["GET"]
-        paths: ["/endpoint"]
-        ports: ["80"]
+      - operation:
+          methods: ["GET"]
+          paths: ["/endpoint"]
+          ports: ["80"]
   selector:
     matchLabels:
       microservice: c
