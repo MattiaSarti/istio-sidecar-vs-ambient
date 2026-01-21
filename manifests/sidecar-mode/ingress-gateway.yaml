@@ -4,6 +4,8 @@ metadata:
   name: microservices-ingress
   namespace: istio-experiments-application-with-sidecar-mode
 spec:
+  selector:
+    istio: ingressgateway
   servers:
     - hosts:
         - "*"
