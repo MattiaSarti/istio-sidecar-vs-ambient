@@ -64,7 +64,6 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     manifest_folder="./manifests"
     manifest_subfolder="${manifest_folder}/${MANIFEST_SUBFOLDER}"
     subfolder_for_microservice_overlays="${manifest_subfolder}/microservice-overlays"
-    namespace_name=$(grep -o 'name: .*' "${manifest_subfolder}/namespace.yaml" | cut -d ' ' -f 2)
 
     ./istioctl install -y -f "${manifest_folder}/istio-configurations.yaml"
 
@@ -77,8 +76,13 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     ```
 1. #### Experiment:
     ```bash
-    kubectl port-forward -n ${namespace_name} service/microservice-a 8081:80
-    curl -w '\n' -H "User-Agent: a-very-handsome-client" http://localhost:8081/endpoint?message=welcome
+    namespace_name=$(grep -o 'name: .*' "${manifest_subfolder}/namespace.yaml" | cut -d ' ' -f 2)
+    ingress_gateway_ip_address=$(kubectl get services istio-ingressgateway -n istio-experiments-istio-system -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+
+    # kubectl port-forward -n ${namespace_name} service/microservice-a 8081:80
+    # curl -w '\n' -H "User-Agent: a-very-handsome-client" http://localhost:8081/endpoint?message=welcome
+
+    curl -w '\n' -H "User-Agent: a-very-handsome-client" http://${ingress_gateway_ip_address}/endpoint?message=welcome
     ```
 1. #### Tear Down:
     ```bash
