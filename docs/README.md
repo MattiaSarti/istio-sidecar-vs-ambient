@@ -58,15 +58,14 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     microk8s enable dns
     sudo microk8s enable hostpath-storage
     microk8s enable istio
-
-    manifest_folder="./manifests"
-
-    ./istioctl install -y -f "${manifest_folder}/istio-configurations.yaml"
     ```
 1. #### Deploy:
     ```bash
+    manifest_folder="./manifests"
     manifest_subfolder="${manifest_folder}/${MANIFEST_SUBFOLDER}"
     subfolder_for_microservice_overlays="${manifest_subfolder}/microservice-overlays"
+
+    ./istioctl install -y -f "${manifest_folder}/istio-configurations.yaml"
 
     kubectl apply -f "${manifest_subfolder}/namespace.yaml"
     kubectl apply -f "${manifest_subfolder}"
