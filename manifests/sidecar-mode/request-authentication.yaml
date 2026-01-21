@@ -1,0 +1,10 @@
+apiVersion: security.istio.io/v1
+kind: RequestAuthentication
+metadata:
+  name: no-jwt-validation-to-microservice-a
+  namespace: istio-experiments-application-with-sidecar-mode
+spec:
+  selector:
+    matchLabels:
+      microservice: a
+  jwtRules: []

@@ -1,6 +1,30 @@
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
+  name: microservices-from-any-with-headers-to-a
+  namespace: istio-experiments-application-with-sidecar-mode
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source: []
+    to:
+    - operation:
+        methods: ["GET"]
+        paths: ["/endpoint"]
+        ports: ["80"]
+  selector:
+    matchLabels:
+      microservice: a
+  when:
+    - key: "request.headers[User-Agent]"
+      values:
+        - "a-very-handsome-client"
+        - "another-very-handsome-client"
+---
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
   name: microservices-from-a-to-b
   namespace: istio-experiments-application-with-sidecar-mode
 spec:
@@ -9,7 +33,7 @@ spec:
   - from:
     - source:
         namespaces: ["istio-experiments-application-with-sidecar-mode"]
-        principals: ["cluster.local/ns/istio-experiments-application-with-sidecar-mode/sa/<SERVICE_ACCOUNT>"]  # TODO: replace "<SERVICE_ACCOUNT>" with A's one once mTLS is implemented as described here: https://istio.io/latest/docs/reference/config/security/authorization-policy/#Source-principals
+        principals: ["cluster.local/ns/istio-experiments-application-with-sidecar-mode/sa/microservice-a"]
     to:
     - operation:
         methods: ["GET"]
@@ -30,7 +54,7 @@ spec:
   - from:
     - source:
         namespaces: ["istio-experiments-application-with-sidecar-mode"]
-        principals: ["cluster.local/ns/istio-experiments-application-with-sidecar-mode/sa/<SERVICE_ACCOUNT>"]  # TODO: replace "<SERVICE_ACCOUNT>" with B's one once mTLS is implemented as described here: https://istio.io/latest/docs/reference/config/security/authorization-policy/#Source-principals
+        principals: ["cluster.local/ns/istio-experiments-application-with-sidecar-mode/sa/microservice-b"]
     to:
     - operation:
         methods: ["GET"]

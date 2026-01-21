@@ -10,6 +10,11 @@ spec:
   selector:
     microservice: whatever
 ---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: microservice
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -77,3 +82,4 @@ spec:
           name: application
           ports:
             - containerPort: 8080
+      serviceAccountName: microservice
