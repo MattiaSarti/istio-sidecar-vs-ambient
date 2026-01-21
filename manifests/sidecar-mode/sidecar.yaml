@@ -7,8 +7,8 @@ metadata:
   namespace: istio-experiments-application-with-sidecar-mode
 spec:
   egress:
-  - hosts:
-    - "istio-experiments-application-with-sidecar-mode/*"
-    # NOTE: from Istio's docs, "[...] Istio control plane (needed by Istio’s egress and telemetry features)":
-    # https://istio.io/latest/docs/concepts/traffic-management/#sidecars
-    - "istio-experiments-istio-system/*"
+    - hosts:
+      - "istio-experiments-application-with-sidecar-mode/*"
+      # NOTE: from Istio's docs, "[...] Istio control plane (needed by Istio’s egress and telemetry features)":
+      # https://istio.io/latest/docs/concepts/traffic-management/#sidecars
+      - "istio-experiments-istio-system/*"
