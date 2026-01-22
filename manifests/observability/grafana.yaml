@@ -1,6 +1,6 @@
-# simlpified solution for demontrations only, source taken from
+# simplified solution for demontration only, source taken from...
 # https://istio.io/latest/docs/ops/integrations/grafana/#option-1-quick-start
-# and adapted by only changing namespaces
+# ...and adapted by only changing namespaces
 ---
 apiVersion: v1
 kind: ServiceAccount
