@@ -1,0 +1,8 @@
+apiVersion: telemetry.istio.io/v1
+kind: Telemetry
+metadata:
+  name: mesh-default
+  namespace: istio-experiments-application-with-sidecar-mode
+spec:
+  tracing:
+    - randomSamplingPercentage: 100
