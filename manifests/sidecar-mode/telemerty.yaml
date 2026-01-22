@@ -1,7 +1,7 @@
 apiVersion: telemetry.istio.io/v1
 kind: Telemetry
 metadata:
-  name: mesh-default
+  name: namespace-telemerty
   namespace: istio-experiments-application-with-sidecar-mode
 spec:
   tracing:
