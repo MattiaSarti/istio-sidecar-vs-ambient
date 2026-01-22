@@ -121,6 +121,5 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     - access control
         - internal
         - egress
-- security (mTLS)
 - some observability (traffic metrics)
 - distributed tracing (request tracking across microservices)
