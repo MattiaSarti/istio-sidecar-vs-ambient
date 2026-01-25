@@ -66,9 +66,11 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     subfolder_for_microservice_overlays="${manifest_subfolder}/microservice-overlays"
 
     ./istioctl install -y -f "${manifest_folder}/istio-configurations.yaml"
-    kubectl apply -f "${manifest_folder}/observability"
 
     kubectl apply -f "${manifest_subfolder}/namespaces.yaml"
+
+    kubectl apply -f "${manifest_folder}/observability"
+
     kubectl apply -f "${manifest_subfolder}"
     for microservice_overlay_suffix in a b c
     do
