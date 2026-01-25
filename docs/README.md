@@ -68,7 +68,7 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     ./istioctl install -y -f "${manifest_folder}/istio-configurations.yaml"
     kubectl apply -f "${manifest_folder}/observability"
 
-    kubectl apply -f "${manifest_subfolder}/namespace.yaml"
+    kubectl apply -f "${manifest_subfolder}/namespaces.yaml"
     kubectl apply -f "${manifest_subfolder}"
     for microservice_overlay_suffix in a b c
     do
@@ -90,7 +90,7 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     ```
 1. #### Tear Down:
     ```bash
-    kubectl delete -f "${manifest_subfolder}/namespace.yaml"
+    kubectl delete -f "${manifest_subfolder}/namespaces.yaml"
     ./istioctl uninstall -y --purge
     kubectl delete namespace istio-experiments-istio-system
     ```

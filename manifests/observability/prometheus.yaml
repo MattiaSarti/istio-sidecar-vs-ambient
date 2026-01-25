@@ -2,6 +2,7 @@
 # https://istio.io/latest/docs/ops/integrations/prometheus/#option-1-quick-start
 # ...and adapted by only changing namespaces and enabling scraping with mTLS:
 # https://istio.io/latest/docs/ops/integrations/prometheus/#tls-settings
+# https://istio.io/latest/docs/tasks/observability/metrics/secure-metrics/
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -14,7 +15,7 @@ metadata:
     helm.sh/chart: prometheus-27.37.0
     app.kubernetes.io/part-of: prometheus
   name: prometheus
-  namespace: istio-experiments-istio-system
+  namespace: istio-experiments-observability
   annotations:
     {}
 ---
@@ -29,7 +30,7 @@ metadata:
     helm.sh/chart: prometheus-27.37.0
     app.kubernetes.io/part-of: prometheus
   name: prometheus
-  namespace: istio-experiments-istio-system
+  namespace: istio-experiments-observability
 data:
   allow-snippet-annotations: "false"
   alerting_rules.yml: |
@@ -420,7 +421,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: prometheus
-    namespace: istio-experiments-istio-system
+    namespace: istio-experiments-observability
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -437,7 +438,7 @@ metadata:
     helm.sh/chart: prometheus-27.37.0
     app.kubernetes.io/part-of: prometheus
   name: prometheus
-  namespace: istio-experiments-istio-system
+  namespace: istio-experiments-observability
 spec:
   ports:
     - name: http
@@ -462,7 +463,7 @@ metadata:
     helm.sh/chart: prometheus-27.37.0
     app.kubernetes.io/part-of: prometheus
   name: prometheus
-  namespace: istio-experiments-istio-system
+  namespace: istio-experiments-observability
 spec:
   strategy:
     type: Recreate

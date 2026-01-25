@@ -4,3 +4,10 @@ metadata:
   name: istio-experiments-application-with-sidecar-mode
   labels:
     istio-injection: enabled
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: istio-experiments-observability
+  labels:
+    istio-injection: enabled
