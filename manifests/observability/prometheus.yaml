@@ -2,6 +2,7 @@
 # https://istio.io/latest/docs/ops/integrations/prometheus/#option-1-quick-start
 # ...and adapted by only changing namespaces and enabling scraping with mTLS:
 # https://istio.io/latest/docs/ops/integrations/prometheus/#tls-settings
+# and NOT by following this:
 # https://istio.io/latest/docs/tasks/observability/metrics/secure-metrics/
 ---
 apiVersion: v1
