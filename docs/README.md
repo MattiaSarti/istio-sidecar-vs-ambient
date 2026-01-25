@@ -119,6 +119,7 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 
 ## ToDos
 - K8s Gateway with no mesh
+- fix Grafana
 - test
     - number of sidecars (1 per replica)
     - access control
