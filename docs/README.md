@@ -87,7 +87,6 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 
     curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/a?message=welcome
 
-    kubectl port-forward -n istio-experiments-istio-system services/grafana 3000:3000
     ./istioctl dashboard grafana --istioNamespace istio-experiments-istio-system -n istio-experiments-observability
     ```
 1. #### Tear Down:
