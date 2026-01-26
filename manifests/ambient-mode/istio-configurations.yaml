@@ -8,19 +8,13 @@ spec:
     cni:
       enabled: true
       namespace: istio-experiments-ambient-mode-istio-system
-    ingressGateways:
-      - enabled: true
-        label:
-          istio: fancy-ingress-gateway
-        name: fancy-ingress-gateway
-        namespace: istio-experiments-sidecar-mode-istio-system
     ztunnel:
       enabled: true
       namespace: istio-experiments-ambient-mode-istio-system
   meshConfig:
     outboundTrafficPolicy:
       mode: REGISTRY_ONLY  # disabling all egress traffic unless explicitly registered
-  profile: minimal
+  profile: default
   tag: 1.28.2
   values:
     cni:
