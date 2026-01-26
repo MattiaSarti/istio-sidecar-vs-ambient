@@ -61,11 +61,10 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     ```
 1. #### Deploy:
     ```bash
-    manifest_folder="./manifests"
-    manifest_subfolder="${manifest_folder}/${MANIFEST_SUBFOLDER}"
+    manifest_subfolder="./manifests/${MANIFEST_SUBFOLDER}"
     subfolder_for_microservice_overlays="${manifest_subfolder}/microservice-overlays"
 
-    ./istioctl install -y -f "${manifest_folder}/istio-configurations.yaml"
+    ./istioctl install -y -f "${manifest_subfolder}/istio-configurations.yaml"
     kubectl apply -f "${manifest_subfolder}/namespace.yaml"
     kubectl apply -f "${manifest_subfolder}/observability"
     kubectl apply -f "${manifest_subfolder}"

@@ -6,11 +6,11 @@ metadata:
 spec:
   components:
     ingressGateways:
-      enabled: true
-      labels:
-        istio: fancy-ingress-gateway
-      name: fancy-ingress-gateway
-      namespace: istio-experiments-sidecar-mode-istio-system
+      - enabled: true
+        label:
+          istio: fancy-ingress-gateway
+        name: fancy-ingress-gateway
+        namespace: istio-experiments-sidecar-mode-istio-system
   meshConfig:
     outboundTrafficPolicy:
       mode: REGISTRY_ONLY  # disabling all egress traffic unless explicitly registered
