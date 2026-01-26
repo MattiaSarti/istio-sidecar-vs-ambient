@@ -5,7 +5,7 @@ metadata:
   namespace: istio-experiments-sidecar-mode-application
 spec:
   selector:
-    istio: ingressgateway
+    istio: fancy-ingress-gateway
   servers:
     - hosts:
         - "completely.made.up.host.com"

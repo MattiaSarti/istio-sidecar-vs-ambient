@@ -4,10 +4,17 @@ metadata:
   name: istio-installation
   namespace: istio-experiments-sidecar-mode-istio-system
 spec:
+  components:
+    ingressGateways:
+      enabled: true
+      labels:
+        istio: fancy-ingress-gateway
+      name: fancy-ingress-gateway
+      namespace: istio-experiments-sidecar-mode-istio-system
   meshConfig:
     outboundTrafficPolicy:
       mode: REGISTRY_ONLY  # disabling all egress traffic unless explicitly registered
-  profile: default
+  profile: minimal
   tag: 1.28.2
   values:
     global:
