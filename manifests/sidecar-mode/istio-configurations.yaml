@@ -10,11 +10,6 @@ spec:
   profile: default
   tag: 1.28.2
   values:
-    cni:
-      cniBinDir: /var/snap/microk8s/current/opt/cni/bin
-      cniConfDir: /var/snap/microk8s/current/args/cni-network
-      excludeNamespaces:
-        - istio-experiments-sidecar-mode-istio-system
     global:
       istioNamespace: istio-experiments-sidecar-mode-istio-system
       platform: microk8s
