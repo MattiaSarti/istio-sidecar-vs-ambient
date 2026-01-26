@@ -67,10 +67,8 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 
     ./istioctl install -y -f "${manifest_folder}/istio-configurations.yaml"
 
-    kubectl apply -f "${manifest_subfolder}/namespaces.yaml"
-
-    kubectl apply -f "${manifest_folder}/observability"
-
+    kubectl apply -f "${manifest_subfolder}/namespace.yaml"
+    kubectl apply -f "${manifest_subfolder}/observability"
     kubectl apply -f "${manifest_subfolder}"
     for microservice_overlay_suffix in a b c
     do
@@ -79,7 +77,7 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     ```
 1. #### Experiment:
     ```bash
-    namespace_name=$(grep -o 'name: .*' "${manifest_subfolder}/namespaces.yaml" |  head -1 | cut -d ' ' -f 2)
+    namespace_name=$(grep -o 'name: .*' "${manifest_subfolder}/namespace.yaml" | cut -d ' ' -f 2)
     ingress_gateway_ip_address=$(kubectl get services istio-ingressgateway -n istio-experiments-istio-system -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
     # kubectl port-forward -n ${namespace_name} services/microservice-a 8081:80
@@ -87,11 +85,11 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 
     curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/a?message=welcome
 
-    ./istioctl dashboard grafana --istioNamespace istio-experiments-istio-system -n istio-experiments-observability
+    ./istioctl dashboard grafana --istioNamespace istio-experiments-istio-system -n ${namespace_name}
     ```
 1. #### Tear Down:
     ```bash
-    kubectl delete -f "${manifest_subfolder}/namespaces.yaml"
+    kubectl delete -f "${manifest_subfolder}/namespace.yaml"
     ./istioctl uninstall -y --purge
     kubectl delete namespace istio-experiments-istio-system
     ```
