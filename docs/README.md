@@ -89,7 +89,7 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     ```bash
     kubectl delete -f "${manifest_subfolder}/namespace.yaml"
     ./istioctl uninstall -y --purge
-    kubectl delete "namespace istio-experiments-${MANIFEST_SUBFOLDER}-istio-system"
+    kubectl delete namespace "istio-experiments-${MANIFEST_SUBFOLDER}-istio-system"
     ```
 
 
