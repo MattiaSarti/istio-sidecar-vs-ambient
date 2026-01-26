@@ -2,7 +2,7 @@ apiVersion: security.istio.io/v1
 kind: PeerAuthentication
 metadata:
   name: strict-mtls
-  namespace: istio-experiments-application-with-sidecar-mode
+  namespace: istio-experiments-sidecar-mode-application
 spec:
   mtls:
     mode: STRICT

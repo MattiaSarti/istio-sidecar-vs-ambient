@@ -2,7 +2,7 @@ apiVersion: networking.istio.io/v1
 kind: DestinationRule
 metadata:
   name: microservice-a
-  namespace: istio-experiments-application-with-sidecar-mode
+  namespace: istio-experiments-sidecar-mode-application
 spec:
   host: microservice-a
   trafficPolicy:
@@ -20,7 +20,7 @@ apiVersion: networking.istio.io/v1
 kind: DestinationRule
 metadata:
   name: microservice-b
-  namespace: istio-experiments-application-with-sidecar-mode
+  namespace: istio-experiments-sidecar-mode-application
 spec:
   host: microservice-b
   trafficPolicy:
@@ -38,7 +38,7 @@ apiVersion: networking.istio.io/v1
 kind: DestinationRule
 metadata:
   name: microservice-c
-  namespace: istio-experiments-application-with-sidecar-mode
+  namespace: istio-experiments-sidecar-mode-application
 spec:
   host: microservice-c
   trafficPolicy:

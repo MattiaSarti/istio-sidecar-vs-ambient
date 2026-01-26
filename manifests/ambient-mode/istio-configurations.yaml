@@ -1,0 +1,20 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  name: istio-installation
+  namespace: istio-experiments-ambient-mode-istio-system
+spec:
+  meshConfig:
+    outboundTrafficPolicy:
+      mode: REGISTRY_ONLY  # disabling all egress traffic unless explicitly registered
+  profile: default
+  tag: 1.28.2
+  values:
+    cni:
+      cniBinDir: /var/snap/microk8s/current/opt/cni/bin
+      cniConfDir: /var/snap/microk8s/current/args/cni-network
+      excludeNamespaces:
+        - istio-experiments-ambient-mode-istio-system
+    global:
+      istioNamespace: istio-experiments-ambient-mode-istio-system
+      platform: microk8s

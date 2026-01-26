@@ -16,7 +16,7 @@ metadata:
     helm.sh/chart: prometheus-27.37.0
     app.kubernetes.io/part-of: prometheus
   name: prometheus
-  namespace: istio-experiments-application-with-sidecar-mode
+  namespace: istio-experiments-sidecar-mode-application
   annotations:
     {}
 ---
@@ -31,7 +31,7 @@ metadata:
     helm.sh/chart: prometheus-27.37.0
     app.kubernetes.io/part-of: prometheus
   name: prometheus
-  namespace: istio-experiments-application-with-sidecar-mode
+  namespace: istio-experiments-sidecar-mode-application
 data:
   allow-snippet-annotations: "false"
   alerting_rules.yml: |
@@ -444,7 +444,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: prometheus
-    namespace: istio-experiments-application-with-sidecar-mode
+    namespace: istio-experiments-sidecar-mode-application
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -461,7 +461,7 @@ metadata:
     helm.sh/chart: prometheus-27.37.0
     app.kubernetes.io/part-of: prometheus
   name: prometheus
-  namespace: istio-experiments-application-with-sidecar-mode
+  namespace: istio-experiments-sidecar-mode-application
 spec:
   ports:
     - name: http
@@ -486,7 +486,7 @@ metadata:
     helm.sh/chart: prometheus-27.37.0
     app.kubernetes.io/part-of: prometheus
   name: prometheus
-  namespace: istio-experiments-application-with-sidecar-mode
+  namespace: istio-experiments-sidecar-mode-application
 spec:
   strategy:
     type: Recreate

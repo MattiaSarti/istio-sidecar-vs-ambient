@@ -2,7 +2,7 @@ apiVersion: install.istio.io/v1alpha1
 kind: IstioOperator
 metadata:
   name: istio-installation
-  namespace: istio-experiments-istio-system
+  namespace: istio-experiments-sidecar-mode-istio-system
 spec:
   meshConfig:
     outboundTrafficPolicy:
@@ -14,7 +14,7 @@ spec:
       cniBinDir: /var/snap/microk8s/current/opt/cni/bin
       cniConfDir: /var/snap/microk8s/current/args/cni-network
       excludeNamespaces:
-        - istio-experiments-istio-system
+        - istio-experiments-sidecar-mode-istio-system
     global:
-      istioNamespace: istio-experiments-istio-system
+      istioNamespace: istio-experiments-sidecar-mode-istio-system
       platform: microk8s

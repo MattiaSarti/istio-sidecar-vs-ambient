@@ -2,7 +2,7 @@ apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
   name: microservices-from-any-with-headers-to-a
-  namespace: istio-experiments-application-with-sidecar-mode
+  namespace: istio-experiments-sidecar-mode-application
 spec:
   action: ALLOW
   rules:
@@ -24,14 +24,14 @@ apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
   name: microservices-from-a-to-b
-  namespace: istio-experiments-application-with-sidecar-mode
+  namespace: istio-experiments-sidecar-mode-application
 spec:
   action: ALLOW
   rules:
   - from:
       - source:
-          namespaces: ["istio-experiments-application-with-sidecar-mode"]
-          principals: ["cluster.local/ns/istio-experiments-application-with-sidecar-mode/sa/microservice-a"]
+          namespaces: ["istio-experiments-sidecar-mode-application"]
+          principals: ["cluster.local/ns/istio-experiments-sidecar-mode-application/sa/microservice-a"]
     to:
       - operation:
           methods: ["GET"]
@@ -45,14 +45,14 @@ apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
   name: microservices-from-b-to-c
-  namespace: istio-experiments-application-with-sidecar-mode
+  namespace: istio-experiments-sidecar-mode-application
 spec:
   action: ALLOW
   rules:
   - from:
       - source:
-          namespaces: ["istio-experiments-application-with-sidecar-mode"]
-          principals: ["cluster.local/ns/istio-experiments-application-with-sidecar-mode/sa/microservice-b"]
+          namespaces: ["istio-experiments-sidecar-mode-application"]
+          principals: ["cluster.local/ns/istio-experiments-sidecar-mode-application/sa/microservice-b"]
     to:
       - operation:
           methods: ["GET"]

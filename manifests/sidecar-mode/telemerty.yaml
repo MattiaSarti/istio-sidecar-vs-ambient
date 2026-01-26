@@ -2,7 +2,7 @@ apiVersion: telemetry.istio.io/v1
 kind: Telemetry
 metadata:
   name: namespace-telemerty
-  namespace: istio-experiments-application-with-sidecar-mode
+  namespace: istio-experiments-sidecar-mode-application
 spec:
   tracing:
     - randomSamplingPercentage: 100
