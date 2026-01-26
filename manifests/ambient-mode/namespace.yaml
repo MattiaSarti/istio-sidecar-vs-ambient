@@ -3,4 +3,5 @@ kind: Namespace
 metadata:
   labels:
     istio.io/dataplane-mode: ambient
-  name: istio-experiments-application-with-ambient-mode
+    istio.io/use-waypoint: fancy-waypoint-proxy
+  name: istio-experiments-ambient-mode-application
