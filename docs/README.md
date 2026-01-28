@@ -64,9 +64,13 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     manifest_subfolder="./manifests/${MANIFEST_SUBFOLDER}"
     subfolder_for_microservice_overlays="${manifest_subfolder}/microservice-overlays"
 
-    ./istioctl install -y -f "${manifest_subfolder}/istio-configurations.yaml"
+    if [ "$MANIFEST_SUBFOLDER" != no-mesh ]
+    then
+        ./istioctl install -y -f "${manifest_subfolder}/istio-configurations.yaml"
+        kubectl apply -f "${manifest_subfolder}/observability"
+    fi
+
     kubectl apply -f "${manifest_subfolder}/namespace.yaml"
-    kubectl apply -f "${manifest_subfolder}/observability"
     kubectl apply -f "${manifest_subfolder}"
     for microservice_overlay_suffix in a b c
     do
@@ -75,21 +79,25 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     ```
 1. #### Experiment:
     ```bash
-    namespace_name=$(grep -o 'name: .*' "${manifest_subfolder}/namespace.yaml" | cut -d ' ' -f 2)
+    application_namespace_name=$(grep -o 'name: .*' "${manifest_subfolder}/namespace.yaml" | cut -d ' ' -f 2)
     ingress_gateway_ip_address=$(kubectl get services fancy-ingress-gateway -n istio-experiments-${MANIFEST_SUBFOLDER}-istio-system -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
-    # kubectl port-forward -n ${namespace_name} services/microservice-a 8081:80
+    # kubectl port-forward -n ${application_namespace_name} services/microservice-a 8081:80
     # curl -w '\n' -H "User-Agent: a-very-handsome-client" http://localhost:8081/endpoint?message=welcome
 
     curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/a?message=welcome
 
-    ./istioctl dashboard grafana --istioNamespace istio-experiments-${MANIFEST_SUBFOLDER}-istio-system -n ${namespace_name}
+    ./istioctl dashboard grafana --istioNamespace istio-experiments-${MANIFEST_SUBFOLDER}-istio-system -n ${application_namespace_name}
     ```
 1. #### Tear Down:
     ```bash
     kubectl delete -f "${manifest_subfolder}/namespace.yaml"
-    ./istioctl uninstall -y --purge
-    kubectl delete namespace "istio-experiments-${MANIFEST_SUBFOLDER}-istio-system"
+
+    if [ "$MANIFEST_SUBFOLDER" != no-mesh ]
+    then
+        ./istioctl uninstall -y --purge
+        kubectl delete namespace "istio-experiments-${MANIFEST_SUBFOLDER}-istio-system"
+    fi
     ```
 
 
