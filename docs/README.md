@@ -123,11 +123,13 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 
 
 ## ToDos
-- K8s Gateway with no mesh
-- fix Grafana
+- use a K8s Gateway with no mesh (necessary for Ambient too)
+- fix Grafana or switch to Kiali
 - test
     - number of sidecars (1 per replica)
-    - access control
-        - internal
-        - egress
-- distributed tracing (request tracking across microservices)
+    - distributed tracing (request tracking across microservices)
+    - show that if A tries to call C directly it fails 
+    - show retries work by making responses successful only 1/10 times (randomly yielding internal server errors)
+    - show egress gateway blocks calls to external domains
+    - display number of API calls from A to B (outgoing) and from B to A (incoming) and from outside the cluster to A
+    - intercepted API calls from within the cluster to verify the content is encrypted
