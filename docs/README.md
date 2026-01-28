@@ -67,7 +67,7 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     if [ "$MANIFEST_SUBFOLDER" != no-mesh ]
     then
         ./istioctl install -y -f "${manifest_subfolder}/istio-configurations.yaml"
-        kubectl apply -f "${manifest_subfolder}/observability"
+        kubectl apply -f "${manifest_subfolder}/observability"  # FIXME
     fi
 
     kubectl apply -f "${manifest_subfolder}/namespace.yaml"
@@ -87,7 +87,7 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 
     curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/a?message=welcome
 
-    ./istioctl dashboard grafana --istioNamespace istio-experiments-${MANIFEST_SUBFOLDER}-istio-system -n ${application_namespace_name}
+    ./istioctl dashboard grafana --istioNamespace istio-experiments-${MANIFEST_SUBFOLDER}-istio-system -n ${application_namespace_name}  # FIXME
     ```
 1. #### Tear Down:
     ```bash
