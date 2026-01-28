@@ -1,0 +1,8 @@
+apiVersion: telemetry.istio.io/v1
+kind: Telemetry
+metadata:
+  name: namespace-telemerty
+  namespace: istio-experiments-ambient-mode-application
+spec:
+  tracing:
+    - randomSamplingPercentage: 100

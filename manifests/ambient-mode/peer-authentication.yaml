@@ -1,0 +1,8 @@
+apiVersion: security.istio.io/v1
+kind: PeerAuthentication
+metadata:
+  name: strict-mtls
+  namespace: istio-experiments-ambient-mode-application
+spec:
+  mtls:
+    mode: STRICT

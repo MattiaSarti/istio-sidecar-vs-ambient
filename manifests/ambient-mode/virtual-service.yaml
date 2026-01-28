@@ -1,0 +1,50 @@
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: microservices
+  namespace: istio-experiments-ambient-mode-application
+spec:
+  hosts:
+    - completely.made.up.host.com
+  http:
+    - match:
+        - uri:
+            exact: /a
+      retries:
+        attempts: 3
+        perTryTimeout: 5s
+      rewrite:
+        uri: /endpoint
+      route:
+        - destination:
+            host: microservice-a
+      timeout: 3s
+    - match:
+        - uri:
+            exact: /b
+      retries:
+        attempts: 3
+        perTryTimeout: 5s
+      rewrite:
+        uri: /endpoint
+      retries:
+        attempts: 3
+        perTryTimeout: 5s
+      route:
+        - destination:
+            host: microservice-b
+      timeout: 3s
+    - match:
+        - uri:
+            exact: /c
+      retries:
+        attempts: 3
+        perTryTimeout: 5s
+      rewrite:
+        uri: /endpoint
+      route:
+        - destination:
+            host: microservice-c
+      timeout: 3s
+  gateways:
+    - microservices-ingress

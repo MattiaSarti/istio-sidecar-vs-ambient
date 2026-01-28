@@ -1,0 +1,63 @@
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: microservices-from-any-with-headers-to-a
+  namespace: istio-experiments-ambient-mode-application
+spec:
+  action: ALLOW
+  rules:
+  - to:
+      - operation:
+          methods: ["GET"]
+          paths: ["/endpoint"]
+          ports: ["8080"]
+    when:
+      - key: "request.headers[User-Agent]"
+        values:
+          - "a-very-handsome-client"
+          - "another-very-handsome-client"
+  selector:
+    matchLabels:
+      microservice: a
+---
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: microservices-from-a-to-b
+  namespace: istio-experiments-ambient-mode-application
+spec:
+  action: ALLOW
+  rules:
+  - from:
+      - source:
+          namespaces: ["istio-experiments-ambient-mode-application"]
+          principals: ["cluster.local/ns/istio-experiments-ambient-mode-application/sa/microservice-a"]
+    to:
+      - operation:
+          methods: ["GET"]
+          paths: ["/endpoint"]
+          ports: ["8080"]
+  selector:
+    matchLabels:
+      microservice: b
+---
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: microservices-from-b-to-c
+  namespace: istio-experiments-ambient-mode-application
+spec:
+  action: ALLOW
+  rules:
+  - from:
+      - source:
+          namespaces: ["istio-experiments-ambient-mode-application"]
+          principals: ["cluster.local/ns/istio-experiments-ambient-mode-application/sa/microservice-b"]
+    to:
+      - operation:
+          methods: ["GET"]
+          paths: ["/endpoint"]
+          ports: ["8080"]
+  selector:
+    matchLabels:
+      microservice: c

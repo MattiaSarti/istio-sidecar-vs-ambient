@@ -1,0 +1,14 @@
+apiVersion: networking.istio.io/v1
+kind: Sidecar
+metadata:
+  # NOTE: from Istio's docs, "It is recommended to use the name default for the namespace-wide sidecar":
+  # https://istio.io/latest/docs/reference/config/networking/sidecar/
+  name: default
+  namespace: istio-experiments-ambient-mode-application
+spec:
+  egress:
+    - hosts:
+      - "istio-experiments-ambient-mode-application/*"
+      # NOTE: from Istio's docs, "[...] Istio control plane (needed by Istio’s egress and telemetry features)":
+      # https://istio.io/latest/docs/concepts/traffic-management/#sidecars
+      - "istio-experiments-sidecar-mode-istio-system/*"
