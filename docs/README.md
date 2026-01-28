@@ -67,10 +67,10 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     if [ "$MANIFEST_SUBFOLDER" != no-mesh ]
     then
         ./istioctl install -y -f "${manifest_subfolder}/istio-configurations.yaml"
-        kubectl apply -f "${manifest_subfolder}/observability"  # FIXME
     fi
 
     kubectl apply -f "${manifest_subfolder}/namespace.yaml"
+    # kubectl apply -f "${manifest_subfolder}/observability"  # FIXME
     kubectl apply -f "${manifest_subfolder}"
     for microservice_overlay_suffix in a b c
     do
@@ -83,11 +83,11 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     ingress_gateway_ip_address=$(kubectl get services istio-ingressgateway -n istio-experiments-${MANIFEST_SUBFOLDER}-istio-system -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
     # kubectl port-forward -n ${application_namespace_name} services/microservice-a 8081:80
-    # curl -w '\n' -H "User-Agent: a-very-handsome-client" http://localhost:8081/endpoint?message=welcome
+    # curl -w '\n' -H "User-Agent: a-very-handsome-client" http://localhost:8081/endpoint?message=welcome  # TODO: use K8s gateway instead
 
     curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/a?message=welcome
 
-    ./istioctl dashboard grafana --istioNamespace istio-experiments-${MANIFEST_SUBFOLDER}-istio-system -n ${application_namespace_name}  # FIXME
+    # ./istioctl dashboard grafana --istioNamespace istio-experiments-${MANIFEST_SUBFOLDER}-istio-system -n ${application_namespace_name}  # FIXME
     ```
 1. #### Tear Down:
     ```bash
