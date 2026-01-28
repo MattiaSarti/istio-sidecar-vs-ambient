@@ -123,7 +123,8 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 
 
 ## ToDos
-- use a K8s Gateway with no mesh (necessary for Ambient too)
+- use a K8s Gateway with no mesh (necessary for ambient mode too)
+    - create ingress gateway yourself for sidecar mode too
 - fix Grafana or switch to Kiali
 - test
     - number of sidecars (1 per replica)
