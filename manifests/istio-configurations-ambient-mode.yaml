@@ -7,6 +7,8 @@ spec:
   components:
     ingressGateways:
       - enabled: true
+        label:
+          istio: super-fancy-ingress-gateway
         name: super-fancy-ingress-gateway
         namespace: istio-experiments-ambient-mode-istio-system
   meshConfig:

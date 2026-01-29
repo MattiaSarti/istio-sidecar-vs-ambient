@@ -1,0 +1,15 @@
+apiVersion: networking.istio.io/v1
+kind: Gateway
+metadata:
+  name: microservices-ingress
+  namespace: istio-experiments-ambient-mode-application
+spec:
+  selector:
+    istio: super-fancy-ingress-gateway
+  servers:
+    - hosts:
+        - "completely.made.up.host.com"
+      port:
+        name: all-http-on-80
+        number: 80
+        protocol: HTTP
