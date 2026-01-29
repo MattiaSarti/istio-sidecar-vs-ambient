@@ -2,7 +2,7 @@ apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: microservices-ingress-gateway
-  namespace: istio-experiments-ambient-mode-application
+  namespace: no-mesh
 spec:
   gatewayClassName: istio
   listeners:

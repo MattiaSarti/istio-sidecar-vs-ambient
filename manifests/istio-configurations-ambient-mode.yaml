@@ -4,13 +4,6 @@ metadata:
   name: istio-installation
   namespace: istio-experiments-ambient-mode-istio-system
 spec:
-  components:
-    ingressGateways:
-      - enabled: true
-        label:
-          istio: super-fancy-ingress-gateway
-        name: super-fancy-ingress-gateway
-        namespace: istio-experiments-ambient-mode-istio-system
   meshConfig:
     outboundTrafficPolicy:
       mode: REGISTRY_ONLY  # disabling all egress traffic unless explicitly registered

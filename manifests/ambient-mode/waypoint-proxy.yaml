@@ -6,7 +6,7 @@ metadata:
   name: fancy-waypoint-proxy
   namespace: istio-experiments-ambient-mode-application
 spec:
-  gatewayClassName: super-fancy-ingress-gateway
+  gatewayClassName: istio
   listeners:
   - name: mesh
     port: 15008

@@ -82,16 +82,13 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     ```
 1. #### Experiment:
     ```bash
-    if [ ${MODE} == "ambient-mode" ]
+    if [ ${MODE} == "sidecar-mode" ]
     then
-        gateway_service_name=super-fancy-ingress-gateway
-    elif [${MODE} == "sidecar-mode"]
-    then
-        gateway_service_name=istio-ingressgateway
+        ingress_gateway_service_name=istio-ingressgateway
     else
-        echo "TODO"
+        ingress_gateway_service_name=microservices-ingress-gateway
     fi
-    ingress_gateway_ip_address=$(kubectl get services ${gateway_service_name} -n istio-experiments-${MODE}-istio-system -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+    ingress_gateway_ip_address=$(kubectl get services ${ingress_gateway_service_name} -n istio-experiments-${MODE}-istio-system -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
     application_namespace_name=$(grep -o 'name: .*' "${manifest_subfolder}/namespace.yaml" | cut -d ' ' -f 2)
 
     # kubectl port-forward -n ${application_namespace_name} services/microservice-a 8081:80
@@ -136,8 +133,12 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 
 ## ToDos
 - define default deny-all policies
-- use a K8s Gateway with no mesh (necessary for ambient mode too)
-    - create ingress gateway yourself for sidecar mode too
+- use a K8s Gateway with no mesh
+- in ambient mode, for each microservice, add:
+    retries:
+        attempts: 3
+        perTryTimeout: 5s
+    timeout: 3s
 - fix Grafana or switch to Kiali
 - test
     - number of sidecars (1 per replica)

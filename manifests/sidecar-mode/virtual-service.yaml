@@ -27,9 +27,6 @@ spec:
         perTryTimeout: 5s
       rewrite:
         uri: /endpoint
-      retries:
-        attempts: 3
-        perTryTimeout: 5s
       route:
         - destination:
             host: microservice-b

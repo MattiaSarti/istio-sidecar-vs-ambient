@@ -8,7 +8,7 @@ spec:
     istio: ingressgateway
   servers:
     - hosts:
-        - "completely.made.up.host.com"
+        - completely.made.up.host.com
       port:
         name: all-http-on-80
         number: 80

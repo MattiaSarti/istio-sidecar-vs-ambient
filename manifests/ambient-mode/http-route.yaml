@@ -1,0 +1,50 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: microservices
+  namespace: istio-experiments-ambient-mode-application
+spec:
+  parentRefs:
+    - name: microservices-ingress-gateway
+  hostnames:
+    - completely.made.up.host.com
+  rules:
+    - backendRefs:
+        - name: microservice-a
+          port: 80
+      filters:
+        - type: URLRewrite
+          urlRewrite:
+            path:
+              type: ReplaceFullPath
+              replaceFullPath: /endpoint
+      matches:
+        - path:
+            type: Exact
+            value: /a
+    - backendRefs:
+        - name: microservice-b
+          port: 80
+      filters:
+        - type: URLRewrite
+          urlRewrite:
+            path:
+              type: ReplaceFullPath
+              replaceFullPath: /endpoint
+      matches:
+        - path:
+            type: Exact
+            value: /b
+    - backendRefs:
+        - name: microservice-c
+          port: 80
+      filters:
+        - type: URLRewrite
+          urlRewrite:
+            path:
+              type: ReplaceFullPath
+              replaceFullPath: /endpoint
+      matches:
+        - path:
+            type: Exact
+            value: /c
