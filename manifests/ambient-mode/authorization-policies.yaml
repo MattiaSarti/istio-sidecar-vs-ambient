@@ -1,6 +1,24 @@
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
+  name: microservices-from-any-with-headers-to-ingress-gateway
+  namespace: istio-experiments-ambient-mode-application
+spec:
+  action: ALLOW
+  rules:
+  - when:
+      - key: "request.headers[User-Agent]"
+        values:
+          - "a-very-handsome-client"
+          - "another-very-handsome-client"
+  targetRefs:  # layer-7 policy
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: microservices-ingress-gateway
+---
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
   name: microservices-from-any-with-headers-to-a
   namespace: istio-experiments-ambient-mode-application
 spec:
@@ -10,7 +28,7 @@ spec:
       - operation:
           methods: ["GET"]
           paths: ["/endpoint"]
-          ports: ["8080"]
+          ports: ["80"]
     when:
       - key: "request.headers[User-Agent]"
         values:
@@ -36,7 +54,7 @@ spec:
       - operation:
           methods: ["GET"]
           paths: ["/endpoint"]
-          ports: ["8080"]
+          ports: ["80"]
   targetRefs:  # layer-7 policy
     - kind: Service
       name: microservice-b
@@ -57,7 +75,7 @@ spec:
       - operation:
           methods: ["GET"]
           paths: ["/endpoint"]
-          ports: ["8080"]
+          ports: ["80"]
   targetRefs:  # layer-7 policy
     - kind: Service
       name: microservice-c
