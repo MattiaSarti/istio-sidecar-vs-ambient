@@ -33,11 +33,13 @@ spec:
               from json import dumps, loads
               from os import environ
               from http.server import BaseHTTPRequestHandler, HTTPServer
+              from random import random
               from urllib.parse import urlsplit, parse_qs
               from urllib.request import Request, urlopen
 
               APPLICATION_PORT = int(environ["APPLICATION_PORT"])
               CHARACTERS_TO_APPEND_TO_MESSAGE = environ["CHARACTERS_TO_APPEND_TO_MESSAGE"]
+              FAIL_RANDOMLY = environ["FAIL_RANDOMLY"] in ("True", "Yes", "true", "yes", "1")
               OTHER_MICROSERVICE_ENDPOINT_TO_CALL = environ["OTHER_MICROSERVICE_ENDPOINT_TO_CALL"]
 
               ENDPOINT_PATH = "/endpoint"
@@ -54,6 +56,8 @@ spec:
                         if message is None:
                             self.send_error(400, "Bad Request", f"Missing '{REQUEST_QUERY_PARAMETER}' query parameter")
                         message = f"{message}{CHARACTERS_TO_APPEND_TO_MESSAGE}"
+                        if FAIL_RANDOMLY and random() < 0.5:
+                          raise Exception("Expected random failure!")
                         if OTHER_MICROSERVICE_ENDPOINT_TO_CALL:
                           with urlopen(Request(f"{OTHER_MICROSERVICE_ENDPOINT_TO_CALL}?{REQUEST_QUERY_PARAMETER}={message.replace(" ", "%20")}", method="GET", headers={"Accept": "application/json"})) as httpresponse:
                             message = loads(httpresponse.read().decode(httpresponse.headers.get_content_charset("utf-8")))[RESPONSE_JSON_KEY]
@@ -76,6 +80,8 @@ spec:
               value: "8080"
             - name: CHARACTERS_TO_APPEND_TO_MESSAGE
               value: " | by whatever microservice"
+            - name: FAIL_RANDOMLY
+              value: false
             - name: OTHER_MICROSERVICE_ENDPOINT_TO_CALL
               value: microservice.istio-experiments-application.svc.cluster.local/endpoint
           image: python:3.12-slim
