@@ -1,9 +1,6 @@
 # simplified solution for demonstration only, source taken from...
 # https://istio.io/latest/docs/ops/integrations/prometheus/#option-1-quick-start
-# ...and adapted by only changing namespaces and enabling scraping with mTLS:
-# https://istio.io/latest/docs/ops/integrations/prometheus/#tls-settings
-# and NOT by following this:
-# https://istio.io/latest/docs/tasks/observability/metrics/secure-metrics/
+# ...and adapted by only changing namespaces
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -16,7 +13,7 @@ metadata:
     helm.sh/chart: prometheus-27.37.0
     app.kubernetes.io/part-of: prometheus
   name: prometheus
-  namespace: istio-experiments-sidecar-mode-application
+  namespace: istio-experiments-sidecar-mode-istio-system
   annotations:
     {}
 ---
@@ -31,7 +28,7 @@ metadata:
     helm.sh/chart: prometheus-27.37.0
     app.kubernetes.io/part-of: prometheus
   name: prometheus
-  namespace: istio-experiments-sidecar-mode-application
+  namespace: istio-experiments-sidecar-mode-istio-system
 data:
   allow-snippet-annotations: "false"
   alerting_rules.yml: |
@@ -67,7 +64,6 @@ data:
       scheme: https
       tls_config:
         ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-        insecure_skip_verify: true  # Prometheus does not support Istio security naming, thus skip verifying target pod certificate
     - bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
       job_name: kubernetes-nodes
       kubernetes_sd_configs:
@@ -346,36 +342,6 @@ data:
         target_label: node
       scrape_interval: 5m
       scrape_timeout: 30s
-    - job_name: 'istiod'
-      kubernetes_sd_configs:
-      - role: endpoints
-        namespaces:
-          names:
-          - istio-system
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]
-        action: keep
-        regex: istiod;http-monitoring
-      scheme: https
-      tls_config:
-        ca_file: /etc/prom-certs/root-cert.pem
-        cert_file: /etc/prom-certs/cert-chain.pem
-        key_file: /etc/prom-certs/key.pem
-        insecure_skip_verify: true  # Prometheus does not support Istio security naming, thus skip verifying target pod certificate
-    - job_name: 'envoy-stats'
-      metrics_path: /stats/prometheus
-      kubernetes_sd_configs:
-      - role: pod
-      relabel_configs:
-      - source_labels: [__meta_kubernetes_pod_container_port_name]
-        action: keep
-        regex: '.*-envoy-prom'
-      scheme: https
-      tls_config:
-        ca_file: /etc/prom-certs/root-cert.pem
-        cert_file: /etc/prom-certs/cert-chain.pem
-        key_file: /etc/prom-certs/key.pem
-        insecure_skip_verify: true  # Prometheus does not support Istio security naming, thus skip verifying target pod certificate
   recording_rules.yml: |
     {}
   rules: |
@@ -444,7 +410,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: prometheus
-    namespace: istio-experiments-sidecar-mode-application
+    namespace: istio-experiments-sidecar-mode-istio-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -461,7 +427,7 @@ metadata:
     helm.sh/chart: prometheus-27.37.0
     app.kubernetes.io/part-of: prometheus
   name: prometheus
-  namespace: istio-experiments-sidecar-mode-application
+  namespace: istio-experiments-sidecar-mode-istio-system
 spec:
   ports:
     - name: http
@@ -486,7 +452,7 @@ metadata:
     helm.sh/chart: prometheus-27.37.0
     app.kubernetes.io/part-of: prometheus
   name: prometheus
-  namespace: istio-experiments-sidecar-mode-application
+  namespace: istio-experiments-sidecar-mode-istio-system
 spec:
   strategy:
     type: Recreate
@@ -500,13 +466,6 @@ spec:
   revisionHistoryLimit: 10
   template:
     metadata:
-      annotations:
-        traffic.sidecar.istio.io/includeInboundPorts: ""   # do not intercept any inbound ports
-        traffic.sidecar.istio.io/includeOutboundIPRanges: ""  # do not intercept any outbound traffic
-        proxy.istio.io/config: |  # configure an env variable `OUTPUT_CERTS` to write certificates to the given folder
-          proxyMetadata:
-            OUTPUT_CERTS: /etc/istio-output-certs
-        sidecar.istio.io/userVolumeMount: '[{"name": "istio-certs", "mountPath": "/etc/istio-output-certs"}]' # mount the shared volume at sidecar proxy
       labels:
         app.kubernetes.io/component: server
         app.kubernetes.io/name: prometheus
@@ -514,7 +473,8 @@ spec:
         app.kubernetes.io/version: v3.5.0
         helm.sh/chart: prometheus-27.37.0
         app.kubernetes.io/part-of: prometheus
-        # sidecar.istio.io/inject: "false"
+        
+        sidecar.istio.io/inject: "false"
     spec:
       enableServiceLinks: true
       serviceAccountName: prometheus
@@ -546,6 +506,7 @@ spec:
             - name: config-volume
               mountPath: /etc/config
               readOnly: true
+
         - name: prometheus-server
           image: "docker.io/prom/prometheus:v3.5.0"
           imagePullPolicy: "IfNotPresent"
@@ -581,8 +542,6 @@ spec:
           volumeMounts:
             - name: config-volume
               mountPath: /etc/config
-            - mountPath: /etc/prom-certs/
-              name: istio-certs
             - name: storage-volume
               mountPath: /data
               subPath: ""
@@ -595,6 +554,3 @@ spec:
         - name: storage-volume
           emptyDir:
             {}
-        - name: istio-certs
-          emptyDir:
-            medium: Memory
