@@ -1,0 +1,12 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  name: istio-installation
+  namespace: istio-experiments-no-mesh-istio-system
+spec:
+  profile: minimal  # only `istiod` is required as Istio is employed solely as an implementation of the K8s Gateway API
+  tag: 1.28.2
+  values:
+    global:
+      istioNamespace: istio-experiments-no-mesh-istio-system
+      platform: microk8s

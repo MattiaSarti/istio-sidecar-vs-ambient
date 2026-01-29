@@ -67,10 +67,7 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 
     kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/standard-install.yaml
 
-    if [ "$MODE" != no-mesh ]
-    then
-        ./istioctl install -y -f "${manifest_folder}/istio-configurations-${MODE}.yaml"
-    fi
+    ./istioctl install -y -f "${manifest_folder}/istio-configurations-${MODE}.yaml"
 
     kubectl apply -f "${manifest_subfolder}/namespace.yaml"
     # kubectl apply -f "${manifest_subfolder}/observability"  # FIXME
@@ -82,14 +79,20 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     ```
 1. #### Experiment:
     ```bash
+    application_namespace_name=$(grep -o 'name: .*' "${manifest_subfolder}/namespace.yaml" | cut -d ' ' -f 2)
     if [ ${MODE} == "sidecar-mode" ]
     then
+        ingress_gateway_namespace=istio-experiments-${MODE}-istio-system
         ingress_gateway_service_name=istio-ingressgateway
+    elif [ ${MODE} == "ambient-mode" ]
+    then
+        ingress_gateway_namespace=istio-experiments-${MODE}-istio-system
+        ingress_gateway_service_name=microservices-ingress-gateway
     else
+        ingress_gateway_namespace=${application_namespace_name}
         ingress_gateway_service_name=microservices-ingress-gateway
     fi
-    ingress_gateway_ip_address=$(kubectl get services ${ingress_gateway_service_name} -n istio-experiments-${MODE}-istio-system -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
-    application_namespace_name=$(grep -o 'name: .*' "${manifest_subfolder}/namespace.yaml" | cut -d ' ' -f 2)
+    ingress_gateway_ip_address=$(kubectl get services ${ingress_gateway_service_name} -n ${ingress_gateway_namespace} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
     # kubectl port-forward -n ${application_namespace_name} services/microservice-a 8081:80
     # curl -w '\n' -H "User-Agent: a-very-handsome-client" http://localhost:8081/endpoint?message=welcome  # TODO: use K8s gateway instead

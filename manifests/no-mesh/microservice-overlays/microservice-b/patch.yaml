@@ -11,4 +11,4 @@ spec:
             - name: CHARACTERS_TO_APPEND_TO_MESSAGE
               value: " | by B"
             - name: OTHER_MICROSERVICE_ENDPOINT_TO_CALL
-              value: http://microservice-c.istio-experiments-application-with-no-mesh.svc.cluster.local/endpoint
+              value: http://microservice-c.istio-experiments-no-mesh-application.svc.cluster.local/endpoint
