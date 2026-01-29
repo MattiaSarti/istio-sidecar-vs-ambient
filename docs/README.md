@@ -67,7 +67,7 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 
     kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/standard-install.yaml
 
-    ./istioctl install -y -f "${manifest_folder}/istio-configurations-${MODE}.yaml"
+    ./istioctl install -y -f "${manifest_folder}/istio-configurations/${MODE}.yaml"
 
     kubectl apply -f "${manifest_subfolder}/namespace.yaml"
     # kubectl apply -f "${manifest_subfolder}/observability"  # FIXME
