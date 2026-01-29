@@ -6,7 +6,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: kiali
-  namespace: "istio-experiments-sidecar-mode-istio-system"
+  namespace: "istio-experiments-ambient-mode-istio-system"
   labels:
     
     helm.sh/chart: kiali-server-2.17.0
@@ -22,7 +22,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: kiali
-  namespace: "istio-experiments-sidecar-mode-istio-system"
+  namespace: "istio-experiments-ambient-mode-istio-system"
   labels:
     
     helm.sh/chart: kiali-server-2.17.0
@@ -83,7 +83,7 @@ data:
         log_level: info
         sampler_rate: "1"
         time_field_format: 2006-01-02T15:04:05Z07:00
-      namespace: istio-experiments-sidecar-mode-istio-system
+      namespace: istio-experiments-ambient-mode-istio-system
       network_policy:
         enabled: false
       node_selector: {}
@@ -123,7 +123,7 @@ data:
       custom_dashboards:
         enabled: true
       istio:
-        root_namespace: istio-experiments-sidecar-mode-istio-system
+        root_namespace: istio-experiments-ambient-mode-istio-system
       tracing:
         enabled: false
     identity:
@@ -244,7 +244,7 @@ rules:
   resources:
   - oauthclients
   resourceNames:
-  - kiali-istio-experiments-sidecar-mode-istio-system
+  - kiali-istio-experiments-ambient-mode-istio-system
   verbs:
   - get
 - apiGroups: ["admissionregistration.k8s.io"]
@@ -276,14 +276,14 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: kiali
-  namespace: "istio-experiments-sidecar-mode-istio-system"
+  namespace: "istio-experiments-ambient-mode-istio-system"
 ...
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: kiali
-  namespace: "istio-experiments-sidecar-mode-istio-system"
+  namespace: "istio-experiments-ambient-mode-istio-system"
   labels:
     
     helm.sh/chart: kiali-server-2.17.0
@@ -313,7 +313,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kiali
-  namespace: "istio-experiments-sidecar-mode-istio-system"
+  namespace: "istio-experiments-ambient-mode-istio-system"
   labels:
     
     helm.sh/chart: kiali-server-2.17.0
