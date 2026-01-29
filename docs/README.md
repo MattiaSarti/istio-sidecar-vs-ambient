@@ -133,6 +133,7 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     retries:
         attempts: 3
         perTryTimeout: 5s
+        retryOn: cancelled,connect-failure,refused-stream,unavailable,500
     timeout: 3s
 - fix Grafana or switch to Kiali
 - test

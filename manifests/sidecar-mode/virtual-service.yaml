@@ -13,6 +13,7 @@ spec:
       retries:
         attempts: 3
         perTryTimeout: 5s
+        retryOn: cancelled,connect-failure,refused-stream,unavailable,500
       rewrite:
         uri: /endpoint
       route:
@@ -25,6 +26,7 @@ spec:
       retries:
         attempts: 3
         perTryTimeout: 5s
+        retryOn: cancelled,connect-failure,refused-stream,unavailable,500
       rewrite:
         uri: /endpoint
       route:
@@ -37,6 +39,7 @@ spec:
       retries:
         attempts: 3
         perTryTimeout: 5s
+        retryOn: cancelled,connect-failure,refused-stream,unavailable,500
       rewrite:
         uri: /endpoint
       route:
