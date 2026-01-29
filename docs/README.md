@@ -29,15 +29,15 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 ### First...
 - #### ...Without Istio:
     ```bash
-    MANIFEST_SUBFOLDER="no-mesh"
+    MODE="no-mesh"
     ```
 - #### ...in Sidecar Mode:
     ```bash
-    MANIFEST_SUBFOLDER="sidecar-mode"
+    MODE="sidecar-mode"
     ```
 - #### ...in Ambient Mode:
     ```bash
-    MANIFEST_SUBFOLDER="ambient-mode"
+    MODE="ambient-mode"
     ```
 
 ### Then:
@@ -52,21 +52,24 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     sudo snap install microk8s --classic --channel=1.32
     sudo usermod -a -G microk8s $USER
     sudo chown -R $USER ~/.kube
-    newgrp microk8s
-    microk8s status --wait-ready
-    microk8s enable community
-    microk8s enable dns
+
+    sudo microk8s status --wait-ready
+    sudo microk8s enable community
+    sudo microk8s enable dns
     sudo microk8s enable hostpath-storage
-    microk8s enable istio
+    sudo microk8s enable istio
     ```
 1. #### Deploy:
     ```bash
-    manifest_subfolder="./manifests/${MANIFEST_SUBFOLDER}"
+    manifest_folder="./manifests"
+    manifest_subfolder="${manifest_folder}/${MODE}"
     subfolder_for_microservice_overlays="${manifest_subfolder}/microservice-overlays"
 
-    if [ "$MANIFEST_SUBFOLDER" != no-mesh ]
+    kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.0/experimental-install.yaml
+
+    if [ "$MODE" != no-mesh ]
     then
-        ./istioctl install -y -f "${manifest_subfolder}/istio-configurations.yaml"
+        ./istioctl install -y -f "${manifest_folder}/istio-configurations-${MODE}.yaml"
     fi
 
     kubectl apply -f "${manifest_subfolder}/namespace.yaml"
@@ -80,7 +83,7 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 1. #### Experiment:
     ```bash
     application_namespace_name=$(grep -o 'name: .*' "${manifest_subfolder}/namespace.yaml" | cut -d ' ' -f 2)
-    ingress_gateway_ip_address=$(kubectl get services istio-ingressgateway -n istio-experiments-${MANIFEST_SUBFOLDER}-istio-system -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+    ingress_gateway_ip_address=$(kubectl get services istio-ingressgateway -n istio-experiments-${MODE}-istio-system -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
     # kubectl port-forward -n ${application_namespace_name} services/microservice-a 8081:80
     # curl -w '\n' -H "User-Agent: a-very-handsome-client" http://localhost:8081/endpoint?message=welcome  # TODO: use K8s gateway instead
@@ -88,16 +91,16 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/a?message=welcome
     curl -w '\n' -H "User-Agent: an-ugly-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/a?message=welcome
 
-    # ./istioctl dashboard grafana --istioNamespace istio-experiments-${MANIFEST_SUBFOLDER}-istio-system -n ${application_namespace_name}  # FIXME
+    # ./istioctl dashboard grafana --istioNamespace istio-experiments-${MODE}-istio-system -n ${application_namespace_name}  # FIXME
     ```
 1. #### Tear Down:
     ```bash
     kubectl delete -f "${manifest_subfolder}/namespace.yaml"
 
-    if [ "$MANIFEST_SUBFOLDER" != no-mesh ]
+    if [ "$MODE" != no-mesh ]
     then
         ./istioctl uninstall -y --purge
-        kubectl delete namespace "istio-experiments-${MANIFEST_SUBFOLDER}-istio-system"
+        kubectl delete namespace "istio-experiments-${MODE}-istio-system"
     fi
     ```
 

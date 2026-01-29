@@ -4,13 +4,11 @@ metadata:
   name: istio-installation
   namespace: istio-experiments-ambient-mode-istio-system
 spec:
-  # components:
-  #   cni:
-  #     enabled: true
-  #     namespace: istio-experiments-ambient-mode-istio-system
-  #   ztunnel:
-  #     enabled: true
-  #     namespace: istio-experiments-ambient-mode-istio-system
+  components:
+    ingressGateways:
+      - enabled: true
+        name: super-fancy-ingress-gateway
+        namespace: istio-experiments-ambient-mode-istio-system
   meshConfig:
     outboundTrafficPolicy:
       mode: REGISTRY_ONLY  # disabling all egress traffic unless explicitly registered
@@ -25,9 +23,3 @@ spec:
     global:
       istioNamespace: istio-experiments-ambient-mode-istio-system
       platform: microk8s
-    # pilot:
-    #   cni:
-    #     enabled: true
-    #   env:
-    #     PILOT_ENABLE_AMBIENT: true
-    #     PILOT_ENABLE_AMBIENT_WAYPOINTS: true
