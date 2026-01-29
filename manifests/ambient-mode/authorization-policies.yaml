@@ -1,12 +1,16 @@
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
-  name: microservices-from-any-with-headers-to-a
+  name: microservices-from-gateway-or-waypoint-with-headers-to-a
   namespace: istio-experiments-ambient-mode-application
 spec:
   action: ALLOW
   rules:
-  - to:
+  - source:
+        principals:
+        - cluster.local/ns/istio-experiments-ambient-mode-application/sa/microservices-ingress-gateway-istio
+        - cluster.local/ns/istio-experiments-ambient-mode-application/sa/fancy-waypoint-proxy
+    to:
       - operation:
           methods: ["GET"]
           paths: ["/endpoint"]
@@ -16,9 +20,9 @@ spec:
         values:
           - "a-very-handsome-client"
           - "another-very-handsome-client"
-  selector:
-    matchLabels:
-      microservice: a
+  targetRefs:  # layer-7 policy
+    - kind: Service
+      name: microservice-a
 ---
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
@@ -37,9 +41,9 @@ spec:
           methods: ["GET"]
           paths: ["/endpoint"]
           ports: ["8080"]
-  selector:
-    matchLabels:
-      microservice: b
+  targetRefs:  # layer-7 policy
+    - kind: Service
+      name: microservice-b
 ---
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
@@ -58,6 +62,6 @@ spec:
           methods: ["GET"]
           paths: ["/endpoint"]
           ports: ["8080"]
-  selector:
-    matchLabels:
-      microservice: c
+  targetRefs:  # layer-7 policy
+    - kind: Service
+      name: microservice-c
