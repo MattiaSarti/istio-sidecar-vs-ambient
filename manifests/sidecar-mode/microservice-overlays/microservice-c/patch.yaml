@@ -10,5 +10,7 @@ spec:
           env:
             - name: CHARACTERS_TO_APPEND_TO_MESSAGE
               value: " | by C"
+            - name: FAIL_RANDOMLY
+              value: "True"
             - name: OTHER_MICROSERVICE_ENDPOINT_TO_CALL
               value: ""
