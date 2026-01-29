@@ -11,7 +11,7 @@ spec:
         - uri:
             exact: /a
       retries:
-        attempts: 3
+        attempts: 30
         perTryTimeout: 5s
         retryOn: cancelled,connect-failure,refused-stream,unavailable,500
       rewrite:
@@ -24,7 +24,7 @@ spec:
         - uri:
             exact: /b
       retries:
-        attempts: 3
+        attempts: 30
         perTryTimeout: 5s
         retryOn: cancelled,connect-failure,refused-stream,unavailable,500
       rewrite:
@@ -37,7 +37,7 @@ spec:
         - uri:
             exact: /c
       retries:
-        attempts: 3
+        attempts: 30
         perTryTimeout: 5s
         retryOn: cancelled,connect-failure,refused-stream,unavailable,500
       rewrite:

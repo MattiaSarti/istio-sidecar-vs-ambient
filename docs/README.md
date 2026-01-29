@@ -131,7 +131,7 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 - use a K8s Gateway with no mesh
 - in ambient mode, for each microservice, add:
     retries:
-        attempts: 3
+        attempts: 30
         perTryTimeout: 5s
         retryOn: cancelled,connect-failure,refused-stream,unavailable,500
     timeout: 3s
