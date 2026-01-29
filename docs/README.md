@@ -84,10 +84,6 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     then
         ingress_gateway_namespace=istio-experiments-${MODE}-istio-system
         ingress_gateway_service_name=istio-ingressgateway
-    elif [ ${MODE} == "ambient-mode" ]
-    then
-        ingress_gateway_namespace=istio-experiments-${MODE}-istio-system
-        ingress_gateway_service_name=microservices-ingress-gateway
     else
         ingress_gateway_namespace=${application_namespace_name}
         ingress_gateway_service_name=microservices-ingress-gateway
