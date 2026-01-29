@@ -125,7 +125,6 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 
 ## ToDos
 - define default deny-all policies
-- use a K8s Gateway with no mesh
 - in ambient mode, for each microservice, add:
     retries:
         attempts: 30
@@ -137,7 +136,7 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     - number of sidecars (1 per replica)
     - distributed tracing (request tracking across microservices)
     - show that if A tries to call C directly it fails 
-    - show retries work by making responses successful only 1/10 times (randomly yielding internal server errors)
     - show egress gateway blocks calls to external domains
     - display number of API calls from A to B (outgoing) and from B to A (incoming) and from outside the cluster to A
     - intercepted API calls from within the cluster to verify the content is encrypted
+    - change microservice env vars to see how API calls are denied when against policies
