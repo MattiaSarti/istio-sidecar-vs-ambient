@@ -65,7 +65,7 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     manifest_subfolder="${manifest_folder}/${MODE}"
     subfolder_for_microservice_overlays="${manifest_subfolder}/microservice-overlays"
 
-    kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.0/experimental-install.yaml
+    kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/standard-install.yaml
 
     if [ "$MODE" != no-mesh ]
     then
