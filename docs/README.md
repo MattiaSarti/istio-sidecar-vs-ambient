@@ -135,6 +135,7 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 
 
 ## ToDos
+- define default deny-all policies
 - use a K8s Gateway with no mesh (necessary for ambient mode too)
     - create ingress gateway yourself for sidecar mode too
 - fix Grafana or switch to Kiali
