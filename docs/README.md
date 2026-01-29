@@ -86,7 +86,7 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
         ingress_gateway_service_name=istio-ingressgateway
     else
         ingress_gateway_namespace=${application_namespace_name}
-        ingress_gateway_service_name=microservices-ingress-gateway
+        ingress_gateway_service_name=microservices-ingress-gateway-istio
     fi
     ingress_gateway_ip_address=$(kubectl get services ${ingress_gateway_service_name} -n ${ingress_gateway_namespace} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
