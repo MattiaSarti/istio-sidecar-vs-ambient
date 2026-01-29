@@ -1,17 +1,12 @@
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
-  name: microservices-from-gateway-or-waypoint-with-headers-to-a
+  name: microservices-from-any-with-headers-to-a
   namespace: istio-experiments-ambient-mode-application
 spec:
   action: ALLOW
   rules:
-  - from:
-    - source:
-        principals:
-          - cluster.local/ns/istio-experiments-ambient-mode-application/sa/microservices-ingress-gateway-istio
-          - cluster.local/ns/istio-experiments-ambient-mode-application/sa/fancy-waypoint-proxy
-    to:
+  - to:
       - operation:
           methods: ["GET"]
           paths: ["/endpoint"]
