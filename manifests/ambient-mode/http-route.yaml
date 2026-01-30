@@ -24,11 +24,11 @@ spec:
             value: /a
       retry:
         attempts: 30
-        backoff: 5s
+        backoff: 500ms
         codes: [500]
       timeouts:
-        request: 2s
-        request: 3s
+        BackendRequest: 30s
+        request: 35s
     - backendRefs:
         - name: microservice-b
           port: 80
@@ -44,11 +44,11 @@ spec:
             value: /b
       retry:
         attempts: 30
-        backoff: 5s
+        backoff: 500ms
         codes: [500]
       timeouts:
-        request: 2s
-        request: 3s
+        BackendRequest: 30s
+        request: 35s
     - backendRefs:
         - name: microservice-c
           port: 80
@@ -64,8 +64,8 @@ spec:
             value: /c
       retry:
         attempts: 30
-        backoff: 5s
+        backoff: 500ms
         codes: [500]
       timeouts:
-        request: 2s
-        request: 3s
+        BackendRequest: 30s
+        request: 35s
