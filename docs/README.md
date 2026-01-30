@@ -91,6 +91,7 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     ingress_gateway_ip_address=$(kubectl get services ${ingress_gateway_service_name} -n ${ingress_gateway_namespace} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
     curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/a?message=welcome
+    curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/b?message=welcome
     curl -w '\n' -H "User-Agent: an-ugly-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/a?message=welcome
 
     # ./istioctl dashboard grafana --istioNamespace istio-experiments-${MODE}-istio-system -n ${application_namespace_name}  # FIXME
