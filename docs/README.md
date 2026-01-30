@@ -129,11 +129,6 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 - integrate with oauth2-proxy:
     https://istio.io/latest/docs/tasks/security/authorization/authz-custom/
 - define default deny-all policies
-- in ambient mode, for each microservice, add:
-    retries:
-        attempts: 30
-        perTryTimeout: 5s
-        retryOn: cancelled,connect-failure,refused-stream,unavailable,500
 - fix Grafana or switch to Kiali
 - test
     - number of sidecars (1 per replica)
