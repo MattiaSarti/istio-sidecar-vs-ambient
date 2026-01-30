@@ -1,7 +1,7 @@
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
-  name: microservices-from-any-with-headers-to-ingress-gateway
+  name: from-any-with-headers-to-ingress-gateway
   namespace: istio-experiments-ambient-mode-application
 spec:
   action: ALLOW
