@@ -4,7 +4,7 @@ metadata:
   labels:
     istio.io/dataplane-mode: ambient
     # - - - - - - - - - - - - - - - - - - - - - - - -
-    # for gateway-to-waypoiny layer-7 processing::
+    # for gateway-to-waypoiny layer-7 processing:
     # - https://github.com/istio/istio/issues/51214
     # - https://github.com/istio/istio/issues/51214
     # - - - - - - - - - - - - - - - - - - - - - - - -
