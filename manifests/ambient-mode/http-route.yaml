@@ -24,10 +24,10 @@ spec:
             value: /a
       retry:
         attempts: 30
-        backoff: 500ms
+        backoff: 10ms
         codes: [500]
       timeouts:
-        BackendRequest: 30s
+        backendRequest: 30s
         request: 35s
     - backendRefs:
         - name: microservice-b
@@ -44,10 +44,10 @@ spec:
             value: /b
       retry:
         attempts: 30
-        backoff: 500ms
+        backoff: 10ms
         codes: [500]
       timeouts:
-        BackendRequest: 30s
+        backendRequest: 30s
         request: 35s
     - backendRefs:
         - name: microservice-c
@@ -64,8 +64,8 @@ spec:
             value: /c
       retry:
         attempts: 30
-        backoff: 500ms
+        backoff: 10ms
         codes: [500]
       timeouts:
-        BackendRequest: 30s
+        backendRequest: 30s
         request: 35s
