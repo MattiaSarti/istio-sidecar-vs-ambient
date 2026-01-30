@@ -124,6 +124,7 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 
 
 ## ToDos
+- allow ingress only with JWT of ServiceAccount via RequestAuthentication
 - define default deny-all policies
 - in ambient mode, for each microservice, add:
     retries:
