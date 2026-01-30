@@ -134,7 +134,6 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
         attempts: 30
         perTryTimeout: 5s
         retryOn: cancelled,connect-failure,refused-stream,unavailable,500
-    timeout: 3s
 - fix Grafana or switch to Kiali
 - test
     - number of sidecars (1 per replica)
