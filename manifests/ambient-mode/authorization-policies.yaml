@@ -43,6 +43,18 @@ spec:
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
+  name: from-waypoiny-proxy-to-any
+  namespace: istio-experiments-ambient-mode-application
+spec:
+  action: ALLOW
+  rules:
+  - from:
+      - source:
+          principals: ["cluster.local/ns/istio-experiments-ambient-mode-application/sa/fancy-waypoint-proxy"]
+---
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
   name: microservices-from-any-with-headers-to-a
   namespace: istio-experiments-ambient-mode-application
 spec:
