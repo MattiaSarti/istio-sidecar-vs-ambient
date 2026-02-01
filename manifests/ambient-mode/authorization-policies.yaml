@@ -1,7 +1,8 @@
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
-  name: allow-nothing
+  name: allow-nothing-to-deny-by-default
+  namespace: istio-experiments-ambient-mode-application
 spec:
   action: ALLOW
   # implementing the deny-by-default behavior for all workloads unless other ALLOW policies are
