@@ -129,7 +129,6 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 
 
 ## ToDos
-- allow ingress only with JWT of ServiceAccount via RequestAuthentication
 - integrate with oauth2-proxy:
     https://istio.io/latest/docs/tasks/security/authorization/authz-custom/
 - fix Grafana or switch to Kiali
