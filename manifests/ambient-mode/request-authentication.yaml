@@ -9,5 +9,5 @@ spec:
       kind: Gateway
       name: microservices-ingress-gateway
   jwtRules:
-    - audiences: ["istio-experiments"]
-      issuer: "https://kubernetes.istio-experiments-ambient-mode-application.svc.cluster.local"
+    - issuer: "testing@secure.istio.io"
+      jwksUri: "https://raw.githubusercontent.com/istio/istio/release-1.28/security/tools/jwt/samples/jwks.json"
