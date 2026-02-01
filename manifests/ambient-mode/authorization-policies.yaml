@@ -21,10 +21,24 @@ spec:
         values:
           - "a-very-handsome-client"
           - "another-very-handsome-client"
-  targetRefs:  # layer-7 policy
+  targetRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway
       name: microservices-ingress-gateway
+---
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: from-any-to-waypoiny-proxy
+  namespace: istio-experiments-ambient-mode-application
+spec:
+  action: ALLOW
+  rules:
+  - {}
+  targetRefs:
+    - group: gateway.networking.k8s.io
+      kind: Gateway
+      name: fancy-waypoint-proxy
 ---
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
@@ -44,7 +58,7 @@ spec:
         values:
           - "a-very-handsome-client"
           - "another-very-handsome-client"
-  targetRefs:  # layer-7 policy
+  targetRefs:
     - kind: Service
       name: microservice-a
 ---
@@ -65,7 +79,7 @@ spec:
           methods: ["GET"]
           paths: ["/endpoint"]
           ports: ["80"]
-  targetRefs:  # layer-7 policy
+  targetRefs:
     - kind: Service
       name: microservice-b
 ---
@@ -86,6 +100,6 @@ spec:
           methods: ["GET"]
           paths: ["/endpoint"]
           ports: ["80"]
-  targetRefs:  # layer-7 policy
+  targetRefs:
     - kind: Service
       name: microservice-c
