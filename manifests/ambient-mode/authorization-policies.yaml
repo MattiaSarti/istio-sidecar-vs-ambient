@@ -1,6 +1,15 @@
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
+  name: allow-nothing
+spec:
+  action: ALLOW
+  # implementing the deny-by-default behavior for all workloads unless other ALLOW policies are
+  # defined for workloads of interest, as no rules means nothing is ever matched
+---
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
   name: from-any-with-headers-to-ingress-gateway
   namespace: istio-experiments-ambient-mode-application
 spec:
