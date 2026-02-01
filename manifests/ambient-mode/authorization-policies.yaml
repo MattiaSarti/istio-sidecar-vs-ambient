@@ -29,20 +29,6 @@ spec:
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
-  name: from-any-to-waypoiny-proxy
-  namespace: istio-experiments-ambient-mode-application
-spec:
-  action: ALLOW
-  rules:
-  - {}
-  targetRefs:
-    - group: gateway.networking.k8s.io
-      kind: Gateway
-      name: fancy-waypoint-proxy
----
-apiVersion: security.istio.io/v1
-kind: AuthorizationPolicy
-metadata:
   name: from-waypoiny-proxy-to-any
   namespace: istio-experiments-ambient-mode-application
 spec:
