@@ -11,12 +11,15 @@ spec:
 apiVersion: security.istio.io/v1
 kind: AuthorizationPolicy
 metadata:
-  name: from-any-with-headers-to-ingress-gateway
+  name: from-any-with-jwt-and-headers-to-ingress-gateway
   namespace: istio-experiments-ambient-mode-application
 spec:
   action: ALLOW
   rules:
-  - when:
+  - from:
+    - source:
+        requestPrincipals: ["system:serviceaccount:istio-experiments-ambient-mode-application:super-handsome-user"]
+    when:
       - key: "request.headers[User-Agent]"
         values:
           - "a-very-handsome-client"
