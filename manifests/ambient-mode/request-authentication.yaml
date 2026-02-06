@@ -7,10 +7,10 @@ spec:
   jwtRules:
     - audiences: ["istio-experiments"]
       issuer: "https://kubernetes.istio-experiments-ambient-mode-application.svc.cluster.local"
-      jwksUri: http://jwks-validation-proxy.istio-experiments-ambient-mode-application.svc.cluster.local/openid/v1/jwks
+      jwksUri: http://jwks-access-proxy.istio-experiments-ambient-mode-application.svc.cluster.local/openid/v1/jwks
     - audiences: ["istio-experiments"]
       issuer: "https://kubernetes.default.svc"
-      jwksUri: http://jwks-validation-proxy.istio-experiments-ambient-mode-application.svc.cluster.local/openid/v1/jwks
+      jwksUri: http://jwks-access-proxy.istio-experiments-ambient-mode-application.svc.cluster.local/openid/v1/jwks
   targetRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway
