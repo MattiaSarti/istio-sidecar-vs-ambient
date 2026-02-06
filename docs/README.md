@@ -90,8 +90,9 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     fi
     ingress_gateway_ip_address=$(kubectl get services ${ingress_gateway_service_name} -n ${ingress_gateway_namespace} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
-    jwt=$(curl https://raw.githubusercontent.com/istio/istio/release-1.28/security/tools/jwt/samples/demo.jwt -s)
-    # echo "$jwt" | cut -d '.' -f2 - | base64 --decode && echo ""
+    user_serviceaccount_name="super-handsome-user"
+    kubectl create serviceaccount -n ${ingress_gateway_namespace} ${user_serviceaccount_name}
+    jwt=$(kubectl create token ${user_serviceaccount_name} -n ${ingress_gateway_namespace} --duration 12h --audience istio-experiments)
 
     # in general:
     # ✅

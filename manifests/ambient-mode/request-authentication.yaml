@@ -4,10 +4,14 @@ metadata:
   name: jwt-validation-for-ingress-gateway
   namespace: istio-experiments-ambient-mode-application
 spec:
+  jwtRules:
+    - audiences: ["istio-experiments"]
+      issuer: "https://kubernetes.istio-experiments-ambient-mode-application.svc.cluster.local"
+      jwksUri: http://jwks-validation-proxy.istio-experiments-ambient-mode-application.svc.cluster.local/openid/v1/jwks
+    - audiences: ["istio-experiments"]
+      issuer: "https://kubernetes.default.svc"
+      jwksUri: http://jwks-validation-proxy.istio-experiments-ambient-mode-application.svc.cluster.local/openid/v1/jwks
   targetRefs:
     - group: gateway.networking.k8s.io
       kind: Gateway
       name: microservices-ingress-gateway
-  jwtRules:
-    - issuer: "testing@secure.istio.io"
-      jwksUri: "https://raw.githubusercontent.com/istio/istio/release-1.28/security/tools/jwt/samples/jwks.json"
