@@ -87,7 +87,7 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 
     user_serviceaccount_name="super-handsome-user"
     kubectl create serviceaccount -n ${ingress_gateway_namespace} ${user_serviceaccount_name}
-    jwt=$(kubectl create token ${user_serviceaccount_name} -n ${ingress_gateway_namespace} --duration 12h --audience istio-experiments)
+    jwt=$(kubectl create token ${user_serviceaccount_name} -n ${ingress_gateway_namespace} --duration 10m --audience istio-experiments)
 
     # in general:
     # ✅
