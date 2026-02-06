@@ -12,4 +12,3 @@ spec:
   values:
     global:
       istioNamespace: istio-experiments-sidecar-mode-istio-system
-      platform: microk8s

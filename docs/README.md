@@ -43,21 +43,16 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 ### Then:
 1. #### Set Up:
     ```bash
-    alias kubectl='microk8s kubectl'
-
     curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.28.2 TARGET_ARCH=x86_64 sh -
     mv ./istio-1.28.2/bin/istioctl .
     rm -r ./istio-1.28.2
 
-    sudo snap install microk8s --classic --channel=1.32
-    sudo usermod -a -G microk8s $USER
-    sudo chown -R $USER ~/.kube
+    sudo snap install --classic concierge
+    sudo concierge prepare -p dev
 
-    sudo microk8s status --wait-ready
-    sudo microk8s enable community
-    sudo microk8s enable dns
-    sudo microk8s enable hostpath-storage
-    sudo microk8s enable istio
+    kubectl -n kube-system patch configmap cilium-config --type merge --patch '{"data":{"bpf-lb-sock-hostns-only":"true"}}'
+    kubectl -n kube-system patch configmap cilium-config --type merge --patch '{"data":{"cni-exclusive":"false"}}'
+    kubectl -n kube-system rollout restart daemonset cilium
     ```
 1. #### Deploy:
     ```bash
@@ -115,6 +110,8 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     kubectl delete -f "${manifest_subfolder}/namespace.yaml"
     ./istioctl uninstall -y --purge
     kubectl delete namespace "istio-experiments-${MODE}-istio-system"
+
+    kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml
     ```
 
 

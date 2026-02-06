@@ -9,4 +9,3 @@ spec:
   values:
     global:
       istioNamespace: istio-experiments-no-mesh-istio-system
-      platform: microk8s

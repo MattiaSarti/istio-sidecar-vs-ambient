@@ -11,10 +11,9 @@ spec:
   tag: 1.28.2
   values:
     cni:
-      cniBinDir: /var/snap/microk8s/current/opt/cni/bin
-      cniConfDir: /var/snap/microk8s/current/args/cni-network
+      cniBinDir: /opt/cni/bin
+      cniConfDir: /etc/cni/net.d
       excludeNamespaces:
         - istio-experiments-ambient-mode-istio-system
     global:
       istioNamespace: istio-experiments-ambient-mode-istio-system
-      platform: microk8s
