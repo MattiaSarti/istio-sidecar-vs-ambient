@@ -99,3 +99,16 @@ spec:
   targetRefs:
     - kind: Service
       name: microservice-c
+---
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+  name: from-any-to-jwks-access-proxy
+  namespace: istio-experiments-ambient-mode-application
+spec:
+  action: ALLOW
+  rules:
+  - {}
+  targetRefs:
+    - kind: Service
+      name: jwks-access-proxy
