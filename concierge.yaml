@@ -16,7 +16,3 @@ providers:
       enable: false
   microk8s:
       enable: false
-host:
-  snaps:
-      charmcraft:
-      channel: 3.x/stable
