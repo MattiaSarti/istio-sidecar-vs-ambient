@@ -48,7 +48,7 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     rm -r ./istio-1.28.2
 
     sudo snap install --classic concierge
-    sudo concierge prepare -p dev
+    sudo concierge prepare --trace  # using ./concierge.yaml
 
     kubectl -n kube-system patch configmap cilium-config --type merge --patch '{"data":{"bpf-lb-sock-hostns-only":"true"}}'
     kubectl -n kube-system patch configmap cilium-config --type merge --patch '{"data":{"cni-exclusive":"false"}}'
