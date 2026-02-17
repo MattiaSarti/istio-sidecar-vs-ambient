@@ -47,20 +47,24 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     mv ./istio-1.28.2/bin/istioctl .
     rm -r ./istio-1.28.2
 
-    sudo snap install --classic concierge
-    sudo concierge prepare --trace  # using ./concierge.yaml
+    sudo snap install k8s --classic --channel=1.32-classic/stable
+    sudo k8s bootstrap
+    sudo k8s status --wait-ready
+    sudo k8s disable gateway
+    sudo k8s status --wait-ready
+    alias kubectl="sudo k8s kubectl"
 
     kubectl -n kube-system patch configmap cilium-config --type merge --patch '{"data":{"bpf-lb-sock-hostns-only":"true"}}'
     kubectl -n kube-system patch configmap cilium-config --type merge --patch '{"data":{"cni-exclusive":"false"}}'
     kubectl -n kube-system rollout restart daemonset cilium
+
+    kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml
     ```
 1. #### Deploy:
     ```bash
     manifest_folder="./manifests"
     manifest_subfolder="${manifest_folder}/${MODE}"
     subfolder_for_microservice_overlays="${manifest_subfolder}/microservice-overlays"
-
-    kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml
 
     ./istioctl install -y -f "${manifest_folder}/istio-configurations/${MODE}.yaml"
 
