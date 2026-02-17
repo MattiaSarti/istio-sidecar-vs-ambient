@@ -52,7 +52,11 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     sudo k8s status --wait-ready
     sudo k8s disable gateway
     sudo k8s status --wait-ready
-    alias kubectl="sudo k8s kubectl"
+
+    mkdir -p $HOME/.kube
+    sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+    sudo chown $(id -u):$(id -g) $HOME/.kube/config
+    sudo snap install kubectl --classic
 
     kubectl -n kube-system patch configmap cilium-config --type merge --patch '{"data":{"bpf-lb-sock-hostns-only":"true"}}'
     kubectl -n kube-system patch configmap cilium-config --type merge --patch '{"data":{"cni-exclusive":"false"}}'
