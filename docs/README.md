@@ -47,22 +47,14 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     mv ./istio-1.28.2/bin/istioctl .
     rm -r ./istio-1.28.2
 
-    sudo snap install k8s --classic --channel=1.32-classic/stable
-    sudo k8s bootstrap
-    sudo k8s status --wait-ready
-    sudo k8s disable gateway
-    sudo k8s status --wait-ready
+    sudo snap install --classic concierge
+    sudo concierge prepare --trace
 
-    mkdir -p $HOME/.kube
-    sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-    sudo chown $(id -u):$(id -g) $HOME/.kube/config
-    sudo snap install kubectl --classic
+    kubectl apply --force-conflicts --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml
 
     kubectl -n kube-system patch configmap cilium-config --type merge --patch '{"data":{"bpf-lb-sock-hostns-only":"true"}}'
     kubectl -n kube-system patch configmap cilium-config --type merge --patch '{"data":{"cni-exclusive":"false"}}'
     kubectl -n kube-system rollout restart daemonset cilium
-
-    kubectl apply --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml
     ```
 1. #### Deploy:
     ```bash
