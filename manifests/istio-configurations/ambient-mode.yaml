@@ -17,3 +17,8 @@ spec:
         - istio-experiments-ambient-mode-istio-system
     global:
       istioNamespace: istio-experiments-ambient-mode-istio-system
+    pilot:
+      env:
+        PILOT_JWT_ENABLE_REMOTE_JWKS: "envoy"
+        PILOT_JWT_PUB_KEY_REFRESH_INTERVAL: 1m
+        JWKS_RESOLVER_INSECURE_SKIP_VERIFY: "true"

@@ -9,13 +9,13 @@ spec:
       fromHeaders:
         - name: Authorization
           prefix: "Bearer "
-      issuer: "https://kubernetes.istio-experiments-ambient-mode-application.svc.cluster.local"
+      issuer: "https://kubernetes.default.svc"
       jwksUri: http://jwks-access-proxy.istio-experiments-ambient-mode-istio-system.svc.cluster.local/openid/v1/jwks
     - audiences: ["istio-experiments"]
       fromHeaders:
         - name: Authorization
           prefix: "Bearer "
-      issuer: "https://kubernetes.default.svc"
+      issuer: "https://kubernetes.istio-experiments-ambient-mode-application.svc.cluster.local"
       jwksUri: http://jwks-access-proxy.istio-experiments-ambient-mode-istio-system.svc.cluster.local/openid/v1/jwks
   targetRefs:
     - group: gateway.networking.k8s.io
