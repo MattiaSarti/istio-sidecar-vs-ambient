@@ -54,22 +54,21 @@ cat >> concierge.yaml <<EOF
 juju:
     enable: false
 providers:
-    k8s:
-        enable: true
-        bootstrap: false
-        channel: 1.32-classic/stable
-        features:
-            local-storage:
-            load-balancer:
-                enabled: true
-                l2-mode: true
-                cidrs: 10.64.140.43/32
-        bootstrap-constraints:
-        root-disk: 2G
-    lxd:
-        enable: false
-        bootstrap: false
-    channel: latest/
+  k8s:
+    enable: true
+    bootstrap: false
+    channel: 1.32-classic/stable
+    features:
+      local-storage:
+      load-balancer:
+        enabled: true
+        l2-mode: true
+        cidrs: 10.64.140.43/32
+    bootstrap-constraints:
+      root-disk: 2G
+  lxd:
+    enable: false
+    bootstrap: false
 EOF
 sudo concierge prepare --trace
 rm concierge.yaml
