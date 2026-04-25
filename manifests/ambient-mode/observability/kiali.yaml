@@ -1,7 +1,10 @@
 # simplified solution for demonstration only, source taken from...
-# https://istio.io/latest/docs/ops/integrations/prometheus/#option-1-quick-start
+# https://istio.io/latest/docs/ops/integrations/kiali/#option-1-quick-start
+# https://raw.githubusercontent.com/istio/istio/release-1.28/samples/addons/kiali.yaml
 # ...and adapted by only changing namespaces
+# -------------------------------------------------------------------------------------------------
 ---
+# Source: kiali-server/templates/serviceaccount.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -18,6 +21,7 @@ metadata:
     app.kubernetes.io/part-of: "kiali"
 ...
 ---
+# Source: kiali-server/templates/configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -147,6 +151,7 @@ data:
     skipResources: []
 ...
 ---
+# Source: kiali-server/templates/role.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -256,6 +261,7 @@ rules:
   - watch
 ...
 ---
+# Source: kiali-server/templates/rolebinding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
@@ -279,6 +285,7 @@ subjects:
   namespace: "istio-experiments-ambient-mode-istio-system"
 ...
 ---
+# Source: kiali-server/templates/service.yaml
 apiVersion: v1
 kind: Service
 metadata:
@@ -309,6 +316,7 @@ spec:
     app.kubernetes.io/instance: kiali
 ...
 ---
+# Source: kiali-server/templates/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
