@@ -50,7 +50,7 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     sudo snap install --classic concierge
     cat >> concierge.yaml <<EOF
     juju:
-    enable: false
+        enable: false
     providers:
     k8s:
         enable: true
