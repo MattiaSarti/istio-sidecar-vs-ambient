@@ -27,114 +27,119 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 
 
 ### First...
-- #### ...Without Istio:
-    ```bash
-    MODE="no-mesh"
-    ```
-- #### ...in Sidecar Mode:
-    ```bash
-    MODE="sidecar-mode"
-    ```
-- #### ...in Ambient Mode:
-    ```bash
-    MODE="ambient-mode"
-    ```
+
+#### ...Without Istio:
+```bash
+MODE="no-mesh"
+```
+#### ...in Sidecar Mode:
+```bash
+MODE="sidecar-mode"
+```
+#### ...in Ambient Mode:
+```bash
+MODE="ambient-mode"
+```
 
 ### Then:
-1. #### Set Up:
-    ```bash
-    curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.28.2 TARGET_ARCH=x86_64 sh -
-    mv ./istio-1.28.2/bin/istioctl .
-    rm -r ./istio-1.28.2
 
-    sudo snap install --classic concierge
-    cat >> concierge.yaml <<EOF
-    juju:
-        enable: false
-    providers:
+#### Set Up:
+```bash
+curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.28.2 TARGET_ARCH=x86_64 sh -
+mv ./istio-1.28.2/bin/istioctl .
+rm -r ./istio-1.28.2
+
+sudo snap install --classic concierge
+cat >> concierge.yaml <<EOF
+juju:
+    enable: false
+providers:
     k8s:
         enable: true
         bootstrap: false
         channel: 1.32-classic/stable
         features:
-        local-storage:
-        load-balancer:
-            enabled: true
-            l2-mode: true
-            cidrs: 10.64.140.43/32
+            local-storage:
+            load-balancer:
+                enabled: true
+                l2-mode: true
+                cidrs: 10.64.140.43/32
         bootstrap-constraints:
         root-disk: 2G
     lxd:
         enable: false
         bootstrap: false
-        channel: latest/
-    EOF
-    sudo concierge prepare --trace
-    rm concierge.yaml
+    channel: latest/
+EOF
+sudo concierge prepare --trace
+rm concierge.yaml
 
-    kubectl apply --force-conflicts --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml
+kubectl apply --force-conflicts --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml
 
-    kubectl -n kube-system patch configmap cilium-config --type merge --patch '{"data":{"bpf-lb-sock-hostns-only":"true"}}'
-    kubectl -n kube-system patch configmap cilium-config --type merge --patch '{"data":{"cni-exclusive":"false"}}'
-    kubectl -n kube-system rollout restart daemonset cilium
-    ```
-1. #### Deploy:
-    ```bash
-    manifest_folder="./manifests"
-    manifest_subfolder="${manifest_folder}/${MODE}"
-    subfolder_for_microservice_overlays="${manifest_subfolder}/microservice-overlays"
+kubectl -n kube-system patch configmap cilium-config --type merge --patch '{"data":{"bpf-lb-sock-hostns-only":"true"}}'
+kubectl -n kube-system patch configmap cilium-config --type merge --patch '{"data":{"cni-exclusive":"false"}}'
+kubectl -n kube-system rollout restart daemonset cilium
+```
 
-    ./istioctl install -y -f "${manifest_folder}/istio-configurations/${MODE}.yaml"
+#### Deploy:
+```bash
+manifest_folder="./manifests"
+manifest_subfolder="${manifest_folder}/${MODE}"
+subfolder_for_microservice_overlays="${manifest_subfolder}/microservice-overlays"
 
-    kubectl apply -f "${manifest_subfolder}/namespace.yaml"
-    # kubectl apply -f "${manifest_subfolder}/observability"  # FIXME
-    kubectl apply -f "${manifest_subfolder}"
-    for microservice_overlay_suffix in a b c
-    do
-        kubectl kustomize "${subfolder_for_microservice_overlays}/microservice-${microservice_overlay_suffix}" | kubectl apply -f -
-    done
-    ```
-1. #### Experiment:
-    ```bash
-    application_namespace_name=$(grep -o 'name: .*' "${manifest_subfolder}/namespace.yaml" | cut -d ' ' -f 2)
-    if [ ${MODE} == "sidecar-mode" ]
-    then
-        ingress_gateway_namespace=istio-experiments-${MODE}-istio-system
-        ingress_gateway_service_name=istio-ingressgateway
-    else
-        ingress_gateway_namespace=${application_namespace_name}
-        ingress_gateway_service_name=microservices-ingress-gateway-istio
-    fi
-    ingress_gateway_ip_address=$(kubectl get services ${ingress_gateway_service_name} -n ${ingress_gateway_namespace} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
+./istioctl install -y -f "${manifest_folder}/istio-configurations/${MODE}.yaml"
 
-    user_serviceaccount_name="super-handsome-user"
-    kubectl create serviceaccount -n ${ingress_gateway_namespace} ${user_serviceaccount_name}
-    jwt=$(kubectl create token ${user_serviceaccount_name} -n ${ingress_gateway_namespace} --duration 1h --audience istio-experiments)
+kubectl apply -f "${manifest_subfolder}/namespace.yaml"
+# kubectl apply -f "${manifest_subfolder}/observability"  # FIXME
+kubectl apply -f "${manifest_subfolder}"
+for microservice_overlay_suffix in a b c
+do
+    kubectl kustomize "${subfolder_for_microservice_overlays}/microservice-${microservice_overlay_suffix}" | kubectl apply -f -
+done
+```
 
-    # in general:
-    # ✅
-    curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/a?message=welcome -H "Authorization: Bearer ${jwt}"
-    # ⛔ forbidden user-agent header:
-    curl -w '\n' -H "User-Agent: an-ugly-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/a?message=welcome -H "Authorization: Bearer ${jwt}"
-    # ⛔ forbidden path routing:
-    curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/b?message=welcome -H "Authorization: Bearer ${jwt}"
+#### Experiment:
+```bash
+application_namespace_name=$(grep -o 'name: .*' "${manifest_subfolder}/namespace.yaml" | cut -d ' ' -f 2)
+if [ ${MODE} == "sidecar-mode" ]
+then
+    ingress_gateway_namespace=istio-experiments-${MODE}-istio-system
+    ingress_gateway_service_name=istio-ingressgateway
+else
+    ingress_gateway_namespace=${application_namespace_name}
+    ingress_gateway_service_name=microservices-ingress-gateway-istio
+fi
+ingress_gateway_ip_address=$(kubectl get services ${ingress_gateway_service_name} -n ${ingress_gateway_namespace} -o jsonpath='{.status.loadBalancer.ingress[0].ip}')
 
-    # in ambient mode only:
-    # ⛔ no JWT:
-    curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/a?message=welcome
-    # ⛔ compromised JWT:
-    curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/a?message=welcome -H "Authorization: Bearer an-invalid-token"
+user_serviceaccount_name="super-handsome-user"
+kubectl create serviceaccount -n ${ingress_gateway_namespace} ${user_serviceaccount_name}
+jwt=$(kubectl create token ${user_serviceaccount_name} -n ${ingress_gateway_namespace} --duration 1h --audience istio-experiments)
 
-    # ./istioctl dashboard grafana --istioNamespace istio-experiments-${MODE}-istio-system -n ${application_namespace_name}  # FIXME
-    ```
-1. #### Tear Down:
-    ```bash
-    kubectl delete -f "${manifest_subfolder}/namespace.yaml"
-    ./istioctl uninstall -y --purge
-    kubectl delete namespace "istio-experiments-${MODE}-istio-system"
+# in general:
+# ✅
+curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/a?message=welcome -H "Authorization: Bearer ${jwt}"
+# ⛔ forbidden user-agent header:
+curl -w '\n' -H "User-Agent: an-ugly-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/a?message=welcome -H "Authorization: Bearer ${jwt}"
+# ⛔ forbidden path routing:
+curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/b?message=welcome -H "Authorization: Bearer ${jwt}"
 
-    kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml
-    ```
+# in ambient mode only:
+# ⛔ no JWT:
+curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/a?message=welcome
+# ⛔ compromised JWT:
+curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/a?message=welcome -H "Authorization: Bearer an-invalid-token"
+
+# ./istioctl dashboard grafana --istioNamespace istio-experiments-${MODE}-istio-system -n ${application_namespace_name}  # FIXME
+```
+
+#### Tear Down:
+```bash
+kubectl delete -f "${manifest_subfolder}/namespace.yaml"
+./istioctl uninstall -y --purge
+kubectl delete namespace "istio-experiments-${MODE}-istio-system"
+
+kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml
+```
 
 
 ## Useful Information
