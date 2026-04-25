@@ -89,7 +89,7 @@ subfolder_for_microservice_overlays="${manifest_subfolder}/microservice-overlays
 ./istioctl install -y -f "${manifest_folder}/istio-configurations/${MODE}.yaml"
 
 kubectl apply -f "${manifest_subfolder}/namespace.yaml"
-# kubectl apply -f "${manifest_subfolder}/observability"  # FIXME
+kubectl apply -f "${manifest_subfolder}/observability"  # FIXME
 kubectl apply -f "${manifest_subfolder}"
 for microservice_overlay_suffix in a b c
 do
