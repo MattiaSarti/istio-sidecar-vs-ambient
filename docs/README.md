@@ -48,7 +48,29 @@ $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
     rm -r ./istio-1.28.2
 
     sudo snap install --classic concierge
+    cat >> concierge.yaml <<EOF
+    juju:
+    enable: false
+    providers:
+    k8s:
+        enable: true
+        bootstrap: false
+        channel: 1.32-classic/stable
+        features:
+        local-storage:
+        load-balancer:
+            enabled: true
+            l2-mode: true
+            cidrs: 10.64.140.43/32
+        bootstrap-constraints:
+        root-disk: 2G
+    lxd:
+        enable: false
+        bootstrap: false
+        channel: latest/
+    EOF
     sudo concierge prepare --trace
+    rm concierge.yaml
 
     kubectl apply --force-conflicts --server-side -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml
 
