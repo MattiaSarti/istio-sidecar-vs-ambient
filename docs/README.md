@@ -131,7 +131,6 @@ curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.u
 # observability:
 for i in {1..100}; do curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/a?message=welcome -H "Authorization: Bearer ${jwt}"; done
 ./istioctl dashboard kiali --istioNamespace istio-experiments-${MODE}-istio-system -n ${application_namespace_name}
-./istioctl dashboard grafana --istioNamespace istio-experiments-${MODE}-istio-system -n ${application_namespace_name}  # FIXME
 ```
 
 #### Tear Down:
@@ -167,7 +166,6 @@ kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/downlo
 ## ToDos
 - integrate with oauth2-proxy:
     https://istio.io/latest/docs/tasks/security/authorization/authz-custom/
-- fix Grafana or switch to Kiali
 - test
     - number of sidecars (1 per replica)
     - distributed tracing (request tracking across microservices)
