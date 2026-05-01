@@ -89,7 +89,7 @@ subfolder_for_microservice_overlays="${manifest_subfolder}/microservice-overlays
 ./istioctl install -y -f "${manifest_folder}/istio-configurations/${MODE}.yaml"
 
 kubectl apply -f "${manifest_subfolder}/namespace.yaml"
-kubectl apply -f "${manifest_subfolder}/observability"  # FIXME
+kubectl apply -f "${manifest_subfolder}/observability"
 kubectl apply -f "${manifest_subfolder}"
 for microservice_overlay_suffix in a b c
 do
@@ -128,7 +128,10 @@ curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.u
 # ⛔ compromised JWT:
 curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/a?message=welcome -H "Authorization: Bearer an-invalid-token"
 
-# ./istioctl dashboard grafana --istioNamespace istio-experiments-${MODE}-istio-system -n ${application_namespace_name}  # FIXME
+# observability:
+for i in {1..100}; do curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/a?message=welcome -H "Authorization: Bearer ${jwt}"; done
+./istioctl dashboard kiali --istioNamespace istio-experiments-${MODE}-istio-system -n ${application_namespace_name}
+./istioctl dashboard grafana --istioNamespace istio-experiments-${MODE}-istio-system -n ${application_namespace_name}  # FIXME
 ```
 
 #### Tear Down:

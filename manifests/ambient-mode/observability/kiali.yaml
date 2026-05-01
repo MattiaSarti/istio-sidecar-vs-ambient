@@ -1,7 +1,7 @@
 # simplified solution for demonstration only, source taken from...
 # https://istio.io/latest/docs/ops/integrations/kiali/#option-1-quick-start
 # https://raw.githubusercontent.com/istio/istio/release-1.28/samples/addons/kiali.yaml
-# ...and adapted by only changing namespaces
+# ...and adapted by only changing namespaces and adding the URL for Prometheus to Kiali's ConfigMap
 # -------------------------------------------------------------------------------------------------
 ---
 # Source: kiali-server/templates/serviceaccount.yaml
@@ -128,6 +128,8 @@ data:
         enabled: true
       istio:
         root_namespace: istio-experiments-ambient-mode-istio-system
+      prometheus:
+        url: "http://prometheus.istio-experiments-ambient-mode-istio-system:9090/"
       tracing:
         enabled: false
     identity:
