@@ -13,7 +13,7 @@ answer: without requiring application code changes, Istio can provide (any of):
     - circuit breaking
     - failovers
 - security:
-    - mTLS (zero-trust network: both client-service and server-service verify)
+    - mTLS (zero-trust network: both client-service and server-service identity verification and encryption)
     - identity & certificate management
     - authentication (service-to-service, end-user)
     - authorization
@@ -60,3 +60,6 @@ for the demo:
 - modify A's envrionment to call C directly -> 403
 - show containers in A's pod(s)
 - show traffic is encrypted (how easy is it, though?)
+
+to be read:
+- https://istio.io/latest/docs/ambient/architecture/traffic-redirection/
