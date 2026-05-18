@@ -18,7 +18,7 @@ answer: without requiring application code changes, Istio can provide (any of):
     - authentication (service-to-service, end-user)
     - authorization
 - telemetry for observability:
-    - metrics (latency, traffic, errors, saturation)
+    - metrics (latency, traffic, errors and saturation, both data-plane and control-plane)
     - distributed traces (call flows, service dependencies)
     - access logs (request details)
 
@@ -46,7 +46,11 @@ traffic schemas: https://m.youtube.com/watch?v=IVADUaLqJbE&pp=ygUSaXN0aW8gYW1iaW
 - sidecar mode
 - ambient mode
     - layer-4 processing sufficient
+        - same node
+        - different nodes
     - layer-7 processing necessary
+        - same node
+        - different nodes
 
 idea: show how istiod (control place) watches changes to custom resources (the .yaml files you apply, that define Istio's behavior) and configures proxies (data plane) accordingly
 - e.g., AuthorizationPolicy: https://istio.io/latest/docs/concepts/security/authz.svg
