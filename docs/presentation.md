@@ -60,6 +60,3 @@ for the demo:
 - modify A's envrionment to call C directly -> 403
 - show containers in A's pod(s)
 - show traffic is encrypted (how easy is it, though?)
-
-to be read:
-- https://istio.io/latest/docs/ambient/architecture/traffic-redirection/
