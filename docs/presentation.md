@@ -1,5 +1,5 @@
 fundamental question: why use Istio (or a service mesh, in general)?
-answer: without requiring application code changes, Istio provides:
+answer: without requiring application code changes, Istio can provide (any of):
 - traffic management:
     - service discovery (on underneath K8s')
     - routing rules
@@ -13,7 +13,7 @@ answer: without requiring application code changes, Istio provides:
     - circuit breaking
     - failovers
 - security:
-    - mTLS (zero-trust network)
+    - mTLS (zero-trust network: both client-service and server-service verify)
     - identity & certificate management
     - authentication (service-to-service, end-user)
     - authorization
@@ -48,7 +48,8 @@ traffic schemas: https://m.youtube.com/watch?v=IVADUaLqJbE&pp=ygUSaXN0aW8gYW1iaW
     - layer-4 processing sufficient
     - layer-7 processing necessary
 
-idea: show how istiod (control place) watches custom resources and configures proxies (data plane) accordingly
+idea: show how istiod (control place) watches changes to custom resources (the .yaml files you apply, that define Istio's behavior) and configures proxies (data plane) accordingly
+- e.g., AuthorizationPolicy: https://istio.io/latest/docs/concepts/security/authz.svg
 
 for the demo:
 - call B and C directly -> 403
