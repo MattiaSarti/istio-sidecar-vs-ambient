@@ -1,7 +1,7 @@
 fundamental question: why use Istio (or a service mesh, in general)?
 answer: without requiring application code changes, Istio provides:
 - traffic management:
-    - service registry (on underneath service discovery)
+    - service discovery (on underneath K8s')
     - routing rules
     - ingress
     - egress
@@ -13,7 +13,7 @@ answer: without requiring application code changes, Istio provides:
     - circuit breaking
     - failovers
 - security:
-    - mTLS
+    - mTLS (zero-trust network)
     - identity & certificate management
     - authentication (service-to-service, end-user)
     - authorization
@@ -36,11 +36,17 @@ why "ztunnel": zero-trust tunnel
 why "HBONE": HTTP-Based Overlay Network Environment
 why "SPIFFE": Secure Production Identity Framework For Everyone
 
-sidecar schema: https://istio.io/latest/docs/ops/deployment/architecture/
+sidecar schemas:
+- https://istio.io/latest/docs/ops/deployment/architecture/
+- https://istio.io/latest/docs/concepts/security/arch-sec.svg
 
 ambient schemas: https://istio.io/latest/docs/ambient/architecture/data-plane
 
 traffic schemas: https://m.youtube.com/watch?v=IVADUaLqJbE&pp=ygUSaXN0aW8gYW1iaWVudCBtb2Rl
+- sidecar mode
+- ambient mode
+    - layer-4 processing sufficient
+    - layer-7 processing necessary
 
 idea: show how istiod (control place) watches custom resources and configures proxies (data plane) accordingly
 
