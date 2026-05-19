@@ -37,10 +37,12 @@ why "HBONE": HTTP-Based Overlay Network Environment
 why "SPIFFE": Secure Production Identity Framework For Everyone
 
 sidecar schemas:
-- https://istio.io/latest/docs/ops/deployment/architecture/
+- https://istio.io/latest/docs/ops/deployment/architecture/arch.svg
 - https://istio.io/latest/docs/concepts/security/arch-sec.svg
 
-ambient schemas: https://istio.io/latest/docs/ambient/architecture/data-plane
+ambient schemas:
+- https://istio.io/latest/docs/ambient/architecture/data-plane/ztunnel-datapath-1.png
+- https://istio.io/latest/docs/ambient/architecture/data-plane/ztunnel-waypoint-datapath.png
 
 traffic schemas: https://m.youtube.com/watch?v=IVADUaLqJbE&pp=ygUSaXN0aW8gYW1iaWVudCBtb2Rl
 - sidecar mode
@@ -60,3 +62,9 @@ for the demo:
 - modify A's envrionment to call C directly -> 403
 - show containers in A's pod(s)
 - show traffic is encrypted (how easy is it, though?)
+
+---
+
+funny:
+- can you believe... one schema per concept?
+- colorful slide, so beaufitul, am I not an artist?
