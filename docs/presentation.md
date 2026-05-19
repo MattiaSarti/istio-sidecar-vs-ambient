@@ -66,6 +66,7 @@ for the demo:
 ---
 
 funny:
+- I know the temptation to sleep is strong...
 - can you believe... one schema per concept?
     - I have some mental problem
 - colorful slide, so beaufitul, am I not an artist?
