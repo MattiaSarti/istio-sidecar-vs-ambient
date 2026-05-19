@@ -63,6 +63,8 @@ for the demo:
 - show containers in A's pod(s)
 - show traffic is encrypted (how easy is it, though?)
 
+TODO: ingresses in schemas
+
 ---
 
 funny:
