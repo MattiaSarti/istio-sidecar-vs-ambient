@@ -72,4 +72,5 @@ funny:
 - can you believe... one schema per concept?
     - I have some mental problem
 - distributed traces... I challenge you to find an icon to represent distributed traces
+- I know you're coding... stop coding, because this is Istio in a picture (at least, for sidecar mode)
 - colorful slide, so beaufitul, am I not an artist?
