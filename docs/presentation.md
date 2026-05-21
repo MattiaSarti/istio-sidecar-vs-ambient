@@ -16,6 +16,7 @@ ambient schemas:
 for the demo:
 - call B and C directly -> 403
 - modify A's envrionment to call C instead of B -> 403
+- modify A's envrionment to call enternal website -> 403
 - show containers in A's pod
     - in sidecar mode
     - in ambient mode

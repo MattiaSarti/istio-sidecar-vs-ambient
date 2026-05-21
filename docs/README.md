@@ -164,8 +164,6 @@ kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/downlo
 
 
 ## ToDos
-- integrate with oauth2-proxy:
-    https://istio.io/latest/docs/tasks/security/authorization/authz-custom/
 - test
     - number of sidecars (1 per replica)
     - distributed tracing (request tracking across microservices)
