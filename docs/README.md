@@ -112,7 +112,7 @@ ingress_gateway_ip_address=$(kubectl get services ${ingress_gateway_service_name
 
 user_serviceaccount_name="super-handsome-user"
 kubectl create serviceaccount -n ${ingress_gateway_namespace} ${user_serviceaccount_name}
-jwt=$(kubectl create token ${user_serviceaccount_name} -n ${ingress_gateway_namespace} --duration 1h --audience istio-experiments)
+jwt=$(kubectl create token ${user_serviceaccount_name} -n ${ingress_gateway_namespace} --duration 5m --audience istio-experiments)
 
 # in general:
 # ✅
@@ -127,6 +127,9 @@ curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.u
 curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/a?message=welcome
 # ⛔ compromised JWT:
 curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/a?message=welcome -H "Authorization: Bearer an-invalid-token"
+
+# ⛔ after some time, token expired:
+curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/a?message=welcome -H "Authorization: Bearer ${jwt}"
 
 # observability:
 for i in {1..100}; do curl -w '\n' -H "User-Agent: a-very-handsome-client" -H "Host: completely.made.up.host.com" http://${ingress_gateway_ip_address}/a?message=welcome -H "Authorization: Bearer ${jwt}"; done
