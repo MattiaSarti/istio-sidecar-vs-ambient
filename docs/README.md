@@ -112,7 +112,7 @@ ingress_gateway_ip_address=$(kubectl get services ${ingress_gateway_service_name
 
 user_serviceaccount_name="super-handsome-user"
 kubectl create serviceaccount -n ${ingress_gateway_namespace} ${user_serviceaccount_name}
-jwt=$(kubectl create token ${user_serviceaccount_name} -n ${ingress_gateway_namespace} --duration 5m --audience istio-experiments)
+jwt=$(kubectl create token ${user_serviceaccount_name} -n ${ingress_gateway_namespace} --duration 10m --audience istio-experiments)
 
 # in general:
 # ✅
