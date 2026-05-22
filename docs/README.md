@@ -145,9 +145,9 @@ kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/downlo
 
 ## ToDos
 - document
-    - run kubectl get ingressclasses
+    - output of `kubectl get gatewayingressclasses`
     - show containers in A's pod
-        - in sidecar mode -> 1 sidecars per replica (deploy multiple replicas for some microservice)
+        - in sidecar mode -> 1 sidecars per replica
         - in ambient mode
     - call B and C directly from outside the cluster -> 403
     - change microservice env vars to see how API calls are denied when against policies
