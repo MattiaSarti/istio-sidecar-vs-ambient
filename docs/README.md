@@ -145,6 +145,7 @@ kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/downlo
 
 ## ToDos
 - document
+    - run kubectl get ingressclasses
     - show containers in A's pod
         - in sidecar mode -> 1 sidecars per replica (deploy multiple replicas for some microservice)
         - in ambient mode
