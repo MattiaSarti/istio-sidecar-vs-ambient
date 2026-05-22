@@ -7,3 +7,4 @@ funny:
 - Istio in a picture: I know you're coding... stop coding, because this is Istio in a picture (at least, for sidecar mode)
 - colorful slide, so beaufitul, am I not an artist?
 - still the demo?! what time is it? I can't take it anymore
+- demo repo, you can see all commits with the changes that add respective features, they have very clear commit messages to distinguish them
