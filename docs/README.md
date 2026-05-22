@@ -1,6 +1,6 @@
 $$ \Huge \color{#516baa} Istio: \space Sidecar \space vs \space Ambient $$
 <p align="center">
-    <strong>A Comparison of Istio's Data Plane Modes: Sidecar and Ambient</strong>
+    <strong>A Comparison of <a href="https://istio.io/latest/docs">Istio</a>'s Data Plane Modes: Sidecar and Ambient</strong>
 </p>
 <img src="./istio-icon.svg" style="vertical-align: middle;">
 
@@ -141,26 +141,6 @@ kubectl delete namespace "istio-experiments-${MODE}-istio-system"
 
 kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/download/v1.4.1/experimental-install.yaml
 ```
-
-
-## Useful Information
-
-### Docs
-#### Introductory:
-- [What is Istio?](https://istio.io/latest/docs/overview/what-is-istio/)
-- [Why choose Istio?](https://istio.io/latest/docs/overview/why-choose-istio/)
-- [Sidecar or ambient?](https://istio.io/latest/docs/overview/dataplane-modes/)
-#### Both for Sidecar and Ambient Modes:
-- [Traffic Management](https://istio.io/latest/docs/concepts/traffic-management/)
-- [Authorization Policy](https://istio.io/latest/docs/reference/config/security/authorization-policy/)
-- [Observability](https://istio.io/latest/docs/concepts/observability/)
-- [Security](https://istio.io/latest/docs/concepts/security/)
-- [Install the Istio CNI node agent](https://istio.io/latest/docs/setup/additional-setup/cni/)
-#### For Sidecar Mode:
-- [Architecture](https://istio.io/latest/docs/ops/deployment/architecture/)
-#### For Ambient Mode:
-- [Overview](https://istio.io/latest/docs/ambient/overview/)
-- [Architecture](https://istio.io/latest/docs/ambient/architecture/)
 
 
 ## ToDos
