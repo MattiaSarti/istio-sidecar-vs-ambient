@@ -164,11 +164,16 @@ kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/downlo
 
 
 ## ToDos
-- test
-    - number of sidecars (1 per replica)
-    - distributed tracing (request tracking across microservices)
-    - show that if A tries to call C directly it fails 
-    - show egress gateway blocks calls to external domains
-    - display number of API calls from A to B (outgoing) and from B to A (incoming) and from outside the cluster to A
-    - intercepted API calls from within the cluster to verify the content is encrypted
+- document
+    - show containers in A's pod
+        - in sidecar mode -> 1 sidecars per replica (deploy multiple replicas for some microservice)
+        - in ambient mode
+    - call B and C directly from outside the cluster -> 403
     - change microservice env vars to see how API calls are denied when against policies
+        - modify A's environment to call C directly instead of B -> 403
+        - modify A's envrionment to call enternal website -> 403
+    - show egress gateway blocks calls to external domains
+    - distributed tracing (request tracking across microservices)
+        - Kiali dashboard
+        - display number of API calls from A to B (outgoing) and from B to A (incoming) and from outside the cluster to A
+    - intercepted API calls within the cluster to verify traffic is encrypted (how easy is it, though?)
