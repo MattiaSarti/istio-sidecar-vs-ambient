@@ -151,10 +151,11 @@ kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/downlo
     - `kubectl get gatewayclasses`
     - show containers in A's pod: `kubectl get -n  ${application_namespace_name} -o=custom-columns="POD_NAME:.metadata.name,CONTAINERS:.spec.containers[*].name,INIT-CONTAINERS:.spec.initContainers[*].name" pods/microservice-a-7d7ddb67dc-k47p9`
         - in sidecar mode -> 1 init + 1 sidecar per replica
-            - `kubectl logs -n  ${application_namespace_name} -c istio-init pods/microservice-a-7d7ddb67dc-k47p9`
-            - `kubectl logs -n  ${application_namespace_name} -c istio-proxy pods/microservice-a-7d7ddb67dc-k47p9`
+            - `kubectl logs -n  ${application_namespace_name} -c istio-init pods/...`
+            - `kubectl logs -n  ${application_namespace_name} -c istio-proxy pods/...`
         - in ambient mode -> 1 init + 0 sidecar per replica
-    - call B and C directly (from the gateway though `HTTPRouteì`) -> 403
+            - `kubectl logs -n  ${application_namespace_name} -c istio-init pods/...`
+    - call B and C directly (from the gateway though `HTTPRoute`) -> 403
     - change microservice env vars to see how API calls are denied when against policies
         - modify A's environment to call C directly instead of B -> 403
         - modify A's envrionment to call enternal domains -> 403
