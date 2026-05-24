@@ -148,16 +148,20 @@ kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/downlo
 
 ## ToDos
 - document
-    - output of `kubectl get gatewayingressclasses`
-    - show containers in A's pod
-        - in sidecar mode -> 1 sidecars per replica
-        - in ambient mode
-    - call B and C directly from outside the cluster -> 403
+    - `kubectl get gatewayclasses`
+    - show containers in A's pod: `kubectl get -n  ${application_namespace_name} -o=custom-columns="POD_NAME:.metadata.name,CONTAINERS:.spec.containers[*].name,INIT-CONTAINERS:.spec.initContainers[*].name" pods/microservice-a-7d7ddb67dc-k47p9`
+        - in sidecar mode -> 1 init + 1 sidecar per replica
+            - `kubectl logs -n  ${application_namespace_name} -c istio-init pods/microservice-a-7d7ddb67dc-k47p9`
+            - `kubectl logs -n  ${application_namespace_name} -c istio-proxy pods/microservice-a-7d7ddb67dc-k47p9`
+        - in ambient mode -> 1 init + 0 sidecar per replica
+    - call B and C directly (from the gateway though `HTTPRouteì`) -> 403
     - change microservice env vars to see how API calls are denied when against policies
         - modify A's environment to call C directly instead of B -> 403
-        - modify A's envrionment to call enternal website -> 403
-    - show egress gateway blocks calls to external domains
+        - modify A's envrionment to call enternal domains -> 403
+            - all egress blocked because no external domain registered as `ServiceEntry` and `outboundTrafficPolicymode: REGISTRY_ONLY` - FIXME, it's not exactly like that, read:
+                - https://blog.howardjohn.info/posts/zero-to-value/
+    - intercepted API calls within the cluster to verify traffic is encrypted
+        - https://www.redhat.com/en/blog/capture-packets-kubernetes-ksniff
     - distributed tracing (request tracking across microservices)
         - Kiali dashboard
         - display number of API calls from A to B (outgoing) and from B to A (incoming) and from outside the cluster to A
-    - intercepted API calls within the cluster to verify traffic is encrypted (how easy is it, though?)
