@@ -148,19 +148,14 @@ kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/downlo
 
 ## ToDos
 - document:
-
     - `kubectl get gatewayclasses`
-
     - show containers in A's pod: `kubectl get -n  ${application_namespace_name} -o=custom-columns="POD_NAME:.metadata.name,CONTAINERS:.spec.containers[*].name,INIT-CONTAINERS:.spec.initContainers[*].name" pods/microservice-a-7d7ddb67dc-k47p9` - and their logs:
         - in sidecar mode -> 1 init + 1 sidecar per replica
             - `kubectl logs -n  ${application_namespace_name} -c istio-init pods/...`
             - `kubectl logs -n  ${application_namespace_name} -c istio-proxy pods/...`
         - in ambient mode -> 1 init + 0 sidecar per replica
             - `kubectl logs -n  ${application_namespace_name} -c istio-init pods/...`
-
     - call B and C directly (from the gateway though `HTTPRoute`) -> 403
-
     - modify A's environment to call C directly instead of B -> 500 due to 403
-
     - intercepted API calls within the cluster to verify traffic is encrypted
         - https://www.redhat.com/en/blog/capture-packets-kubernetes-ksniff
