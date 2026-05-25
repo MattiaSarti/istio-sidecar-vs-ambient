@@ -161,7 +161,7 @@ kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/downlo
     - call B and C directly (from the gateway though `HTTPRoute`) -> 403
 
     - change microservice env vars to see how API calls are denied when against policies:
-        - modify A's environment to call C directly instead of B -> 403
+        - modify A's environment to call C directly instead of B -> 500 due to 403
         - modify A's envrionment to call enternal domains -> 403
             - all egress blocked because no external domain registered as `ServiceEntry` and `outboundTrafficPolicymode: REGISTRY_ONLY` - FIXME, it's not exactly like that, read:
                 - https://blog.howardjohn.info/posts/zero-to-value/
