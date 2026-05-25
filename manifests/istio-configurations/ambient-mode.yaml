@@ -6,6 +6,7 @@ metadata:
 spec:
   meshConfig:
     outboundTrafficPolicy:
+      # NOTE: not implemented yet upstream in ambient mode as of the current version of Istio:
       mode: REGISTRY_ONLY  # disabling all egress traffic unless explicitly registered
   profile: ambient
   tag: 1.28.2
