@@ -22,13 +22,6 @@ spec:
         - path:
             type: Exact
             value: /a
-      retry:
-        attempts: 30
-        backoff: 10ms
-        codes: [500]
-      timeouts:
-        backendRequest: 30s
-        request: 35s
     - backendRefs:
         - name: microservice-b
           port: 80
@@ -42,13 +35,6 @@ spec:
         - path:
             type: Exact
             value: /b
-      retry:
-        attempts: 30
-        backoff: 10ms
-        codes: [500]
-      timeouts:
-        backendRequest: 30s
-        request: 35s
     - backendRefs:
         - name: microservice-c
           port: 80
@@ -62,10 +48,3 @@ spec:
         - path:
             type: Exact
             value: /c
-      retry:
-        attempts: 30
-        backoff: 10ms
-        codes: [500]
-      timeouts:
-        backendRequest: 30s
-        request: 35s
