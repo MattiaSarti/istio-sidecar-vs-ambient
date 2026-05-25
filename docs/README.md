@@ -147,22 +147,28 @@ kubectl delete -f https://github.com/kubernetes-sigs/gateway-api/releases/downlo
 
 
 ## ToDos
-- document
+- document:
+
     - `kubectl get gatewayclasses`
-    - show containers in A's pod: `kubectl get -n  ${application_namespace_name} -o=custom-columns="POD_NAME:.metadata.name,CONTAINERS:.spec.containers[*].name,INIT-CONTAINERS:.spec.initContainers[*].name" pods/microservice-a-7d7ddb67dc-k47p9`
+
+    - show containers in A's pod: `kubectl get -n  ${application_namespace_name} -o=custom-columns="POD_NAME:.metadata.name,CONTAINERS:.spec.containers[*].name,INIT-CONTAINERS:.spec.initContainers[*].name" pods/microservice-a-7d7ddb67dc-k47p9` - and their logs:
         - in sidecar mode -> 1 init + 1 sidecar per replica
             - `kubectl logs -n  ${application_namespace_name} -c istio-init pods/...`
             - `kubectl logs -n  ${application_namespace_name} -c istio-proxy pods/...`
         - in ambient mode -> 1 init + 0 sidecar per replica
             - `kubectl logs -n  ${application_namespace_name} -c istio-init pods/...`
+
     - call B and C directly (from the gateway though `HTTPRoute`) -> 403
-    - change microservice env vars to see how API calls are denied when against policies
+
+    - change microservice env vars to see how API calls are denied when against policies:
         - modify A's environment to call C directly instead of B -> 403
         - modify A's envrionment to call enternal domains -> 403
             - all egress blocked because no external domain registered as `ServiceEntry` and `outboundTrafficPolicymode: REGISTRY_ONLY` - FIXME, it's not exactly like that, read:
                 - https://blog.howardjohn.info/posts/zero-to-value/
+
     - intercepted API calls within the cluster to verify traffic is encrypted
         - https://www.redhat.com/en/blog/capture-packets-kubernetes-ksniff
+
     - distributed tracing (request tracking across microservices)
         - Kiali dashboard
         - display number of API calls from A to B (outgoing) and from B to A (incoming) and from outside the cluster to A
